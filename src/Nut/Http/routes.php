@@ -9,4 +9,4 @@
 |
 */
 
-Route::get('/sign-in', ['as' => 'sign-in',	function() {	return view('Nut::sign-in'); }]);
+Route::get('/', ['as' => 'index',	function() {	return view('Nut::index'); }]);

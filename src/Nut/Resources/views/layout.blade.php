@@ -17,8 +17,16 @@
        
     </head>
     <body>
+        
+        
         @section('body')
             Default Body Content
+        @show
+
+        @section('scripts')
+            
+           
+
         @show
     </body>
 </html>
