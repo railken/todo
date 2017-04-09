@@ -36,8 +36,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 	App.get('router')
 		.on('/sign-in', function () {
-			console.log('display login');
-			//App.get('view').set('sign-in');
+			$('body').html(template.get('sign-in'));
 		})
 	  	.resolve();
 
