@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use Core\User\UserManager;
 use Core\User\UserSerializer;
 
+use Core\User\UserSerializer;
+
 class ProfileController extends Controller
 {
 
 	/**
 	 * Construct
 	 *
-	 * @param UserSerializer $serializer
 	 */
 	public function __construct(UserSerializer $serializer)
 	{
@@ -29,10 +30,8 @@ class ProfileController extends Controller
 	 */
 	public function index(Request $request)
 	{
-
-		$data = $this->serializer->user(\Auth::user());
 		
-		return $this->success(['data' => $data]);
+		return $this->success(['data' => ['resource' => $this->serializer->user(\Auth::user())]]);
 	}
 
 }
