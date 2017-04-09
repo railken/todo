@@ -129,28 +129,28 @@ class SignInController extends Controller
 		$client = (new \Laravel\Passport\ClientRepository())->find(2);
 		$scopes = [];
 
-        $accessToken = new AccessToken();
-        $accessToken->client()->associate($client);
-        $accessToken->user()->associate($user);
-        $accessToken->scopes=[];
-        $accessToken->revoked = 0;
-        $accessToken->expires_at = ((new \DateTime())->add(\Laravel\Passport\Passport::tokensExpireIn()));
+		$accessToken = new AccessToken();
+		$accessToken->client()->associate($client);
+		$accessToken->user()->associate($user);
+		$accessToken->scopes=[];
+		$accessToken->revoked = 0;
+		$accessToken->expires_at = ((new \DateTime())->add(\Laravel\Passport\Passport::tokensExpireIn()));
 
 
-        while ($maxGenerationAttempts-- > 0) {
-            $accessToken->id = bin2hex(random_bytes(40));
-            try {
+		while ($maxGenerationAttempts-- > 0) {
+			$accessToken->id = bin2hex(random_bytes(40));
+			try {
 
-            	$accessToken->save();
+				$accessToken->save();
 
-                return $accessToken;
-            } catch (\Exception $e) {
-                if ($maxGenerationAttempts === 0) {
-                    throw $e;
-                }
-            }
-        }
-        return $accessToken;
+				return $accessToken;
+			} catch (\Exception $e) {
+				if ($maxGenerationAttempts === 0) {
+					throw $e;
+				}
+			}
+		}
+		return $accessToken;
 
 	}
 }
