@@ -7,8 +7,9 @@ use Api\Http\Controllers\Controller;
 use Core\User\UserManager;
 use Core\User\UserSerializer;
 use Api\Api\Manager as ApiManager;
-use Api\OAuth\GithubProvider;
 use Api\OAuth\Entity\AccessToken;
+use Api\OAuth\GithubProvider;
+use Api\OAuth\GitlabProvider;
 
 class SignInController extends Controller
 {
@@ -21,6 +22,7 @@ class SignInController extends Controller
 	 */
 	protected $providers = [
 		'github' => GithubProvider::class,
+		'gitlab' => GitlabProvider::class,
 	];
 
 	/**

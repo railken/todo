@@ -9,7 +9,7 @@
         <a class="btn btn-block btn-social btn-dropbox">
             <span style='display:flex;align-items:center;justify-content:center'><img src="{{ assets('Nut::app/layout/img/horizon.png') }}" width='20' height='20'></span> Sign in with Horizon
         </a>
-        <a class="btn btn-block btn-social btn-odnoklassniki" style='background: #554488'>
+        <a class="btn btn-block btn-social btn-odnoklassniki" style='background: #554488' auth='gitlab'>
             <span class="fa fa-gitlab"></span> Sign in with GitLab
         </a>
         <a class="btn btn-block btn-social btn-github" auth='github'>
