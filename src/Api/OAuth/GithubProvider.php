@@ -39,7 +39,7 @@ class GithubProvider extends Provider
 		return $this->url."/authorize?".http_build_query([
 			'client_id' => $this->client_id,
 			'redirect_uri' => $this->getRedirectUri(),
-	        'scope' => 'user:email'
+			'scope' => 'user:email'
 		]);
 	}
 
@@ -52,28 +52,28 @@ class GithubProvider extends Provider
 	{
 		$client = new \GuzzleHttp\Client();
 
-        try {
-        	$params =  [
-	            'form_params' => [
-	            	'client_id' => $this->client_id,
-	            	'client_secret' => $this->client_secret,
-	            	'code' => $request->input('code')
-	            ],
-	            'headers' => [
-	            	'Accept' => 'application/json'
-	            ]
-	        ];
+		try {
+			$params =  [
+				'form_params' => [
+					'client_id' => $this->client_id,
+					'client_secret' => $this->client_secret,
+					'code' => $request->input('code')
+				],
+				'headers' => [
+					'Accept' => 'application/json'
+				]
+			];
 
 
 
-	        $response = $client->request('POST', $this->url."/access_token", $params);
-    	} catch (\Exception $e) {
-    		echo $e;
-    	}
+			$response = $client->request('POST', $this->url."/access_token", $params);
+		} catch (\Exception $e) {
+			echo $e;
+		}
 
-        $body = json_decode($response->getBody());
+		$body = json_decode($response->getBody());
 
-       	return $body;
+	   	return $body;
 	}
 
 
@@ -85,44 +85,44 @@ class GithubProvider extends Provider
 	public function getUser($token)
 	{
 		$client = new \GuzzleHttp\Client();
-        $user = new \stdClass;
+		$user = new \stdClass;
 
-        try {
-        	
-	        $response = $client->request('GET', "https://api.github.com/user", [
-	            'headers' => [
-	            	'Accept' => 'application/json',
-	            	'Authorization' => "token {$token}"
-	           	],
-	            'http_errors' => false
-	        ]);
+		try {
+			
+			$response = $client->request('GET', "https://api.github.com/user", [
+				'headers' => [
+					'Accept' => 'application/json',
+					'Authorization' => "token {$token}"
+			   	],
+				'http_errors' => false
+			]);
 
-        	$body = json_decode($response->getBody());
+			$body = json_decode($response->getBody());
 
-    	} catch (\Exception $e) {
-    		return $this->error([]);
-    	}
+		} catch (\Exception $e) {
+			return $this->error([]);
+		}
 
-        $user->username = $body->name;
-        $user->avatar = $body->avatar_url;
+		$user->username = $body->name;
+		$user->avatar = $body->avatar_url;
 
-        try {
+		try {
 
-	        $response = $client->request('GET', "https://api.github.com/user/emails", [
-	            'headers' => [
-	            	'Accept' => 'application/json',
-	            	'Authorization' => "token {$token}"
-	           	],
-	            'http_errors' => false
-	        ]);
-        	$body = json_decode($response->getBody());
+			$response = $client->request('GET', "https://api.github.com/user/emails", [
+				'headers' => [
+					'Accept' => 'application/json',
+					'Authorization' => "token {$token}"
+			   	],
+				'http_errors' => false
+			]);
+			$body = json_decode($response->getBody());
 
-    	} catch (\Exception $e) {
-    		return $this->error([]);
-    	}
+		} catch (\Exception $e) {
+			return $this->error([]);
+		}
 
-        $user->email = $body[0]->email;
+		$user->email = $body[0]->email;
 
-        return $user;
+		return $user;
 	}
 }

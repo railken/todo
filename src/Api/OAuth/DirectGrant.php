@@ -19,49 +19,49 @@ class DirectGrant extends AbstractGrant
 
 
 
-    /**
-     * Issue an access token.
-     *
-     * @param \DateInterval          $accessTokenTTL
-     * @param ClientEntityInterface  $client
-     * @param string                 $userIdentifier
-     * @param ScopeEntityInterface[] $scopes
-     *
-     * @throws OAuthServerException
-     * @throws UniqueTokenIdentifierConstraintViolationException
-     *
-     * @return AccessTokenEntityInterface
-     */
-    protected function issueAccessToken(
-        \DateInterval $accessTokenTTL,
-        ClientEntityInterface $client,
-        $userIdentifier,
-        array $scopes = []
-    ) {
-        $maxGenerationAttempts = self::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
+	/**
+	 * Issue an access token.
+	 *
+	 * @param \DateInterval		  $accessTokenTTL
+	 * @param ClientEntityInterface  $client
+	 * @param string				 $userIdentifier
+	 * @param ScopeEntityInterface[] $scopes
+	 *
+	 * @throws OAuthServerException
+	 * @throws UniqueTokenIdentifierConstraintViolationException
+	 *
+	 * @return AccessTokenEntityInterface
+	 */
+	protected function issueAccessToken(
+		\DateInterval $accessTokenTTL,
+		ClientEntityInterface $client,
+		$userIdentifier,
+		array $scopes = []
+	) {
+		$maxGenerationAttempts = self::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
 
-        $accessToken = $this->accessTokenRepository->getNewToken($client, $scopes, $userIdentifier);
-        $accessToken->setClient($client);
-        $accessToken->setUserIdentifier($userIdentifier);
-        $accessToken->setExpiryDateTime((new \DateTime())->add($accessTokenTTL));
+		$accessToken = $this->accessTokenRepository->getNewToken($client, $scopes, $userIdentifier);
+		$accessToken->setClient($client);
+		$accessToken->setUserIdentifier($userIdentifier);
+		$accessToken->setExpiryDateTime((new \DateTime())->add($accessTokenTTL));
 
-        foreach ($scopes as $scope) {
-            $accessToken->addScope($scope);
-        }
+		foreach ($scopes as $scope) {
+			$accessToken->addScope($scope);
+		}
 
-        while ($maxGenerationAttempts-- > 0) {
-            $accessToken->setIdentifier($this->generateUniqueIdentifier());
-            try {
-                $this->accessTokenRepository->persistNewAccessToken($accessToken);
+		while ($maxGenerationAttempts-- > 0) {
+			$accessToken->setIdentifier($this->generateUniqueIdentifier());
+			try {
+				$this->accessTokenRepository->persistNewAccessToken($accessToken);
 
-                return $accessToken;
-            } catch (UniqueTokenIdentifierConstraintViolationException $e) {
-                if ($maxGenerationAttempts === 0) {
-                    throw $e;
-                }
-            }
-        }
-    }
+				return $accessToken;
+			} catch (UniqueTokenIdentifierConstraintViolationException $e) {
+				if ($maxGenerationAttempts === 0) {
+					throw $e;
+				}
+			}
+		}
+	}
 
 
 }

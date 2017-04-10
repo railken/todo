@@ -20,129 +20,129 @@ use Railken\Laravel\Manager\ModelContract;
 class UserManager extends ModelManager
 {
 
-    /**
+	/**
 	 * Repository
 	 *
-     * @var UserRepository
-     */
-    protected $repository;
-
-    /**
-     * Construct
-     */
-    public function __construct()
-    {
-        $this->repository = new UserRepository();
-    }
-
-    /**
-     * Retrieve repository
-     *
-     * @return Repository
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
+	 * @var UserRepository
+	 */
+	protected $repository;
 
 	/**
-     * Throw an exception if a parameter is null
-     *
-     * @param array $params
-     *
-     * @return void
-     */
-    public function throwExceptionParamsNull($params)
-    {
-        foreach($params as $name => $value) {
-            if($value == null) {
-                throw new MissingParamException("Missing parameter: {$name}");
-            }
-        }
-    }
+	 * Construct
+	 */
+	public function __construct()
+	{
+		$this->repository = new UserRepository();
+	}
 
-    /**
-     * Throw an exception if a parameter is missing
-     *
-     * @param array $required
-     * @param array $sent
-     *
-     * @return void
-     */
-    public function throwExceptionMissingParam($required, $sent)
-    {
-        foreach($required as $param) {
-            if(!isset($sent[$param])) {
-                throw new MissingParamException("Missing parameter: {$param}");
-            }
-        }
-    }
+	/**
+	 * Retrieve repository
+	 *
+	 * @return Repository
+	 */
+	public function getRepository()
+	{
+		return $this->repository;
+	}
 
-    /**
-     * Throw an exception if email already exists
-     *
-     * @param string $email
-     *
-     * @return void
-     */
-    public function throwExceptionEmailAlreadyUsed(ModelContract $entity, $email)
-    {
-        if($this->getRepository()->uniqueByEmail($entity, $email))
-            throw new EmailAlreadyUsedException();
-    }
+	/**
+	 * Throw an exception if a parameter is null
+	 *
+	 * @param array $params
+	 *
+	 * @return void
+	 */
+	public function throwExceptionParamsNull($params)
+	{
+		foreach($params as $name => $value) {
+			if($value == null) {
+				throw new MissingParamException("Missing parameter: {$name}");
+			}
+		}
+	}
 
-    /**
-     * Throw an exception if username already exists
-     *
-     * @param string $username
-     *
-     * @return void
-     */
-    public function throwExceptionUsernameAlreadyUsed(ModelContract $entity, $username)
-    {
-        if($this->getRepository()->uniqueByUsername($entity, $username))
-            throw new UsernameAlreadyUsedException();
-    }
+	/**
+	 * Throw an exception if a parameter is missing
+	 *
+	 * @param array $required
+	 * @param array $sent
+	 *
+	 * @return void
+	 */
+	public function throwExceptionMissingParam($required, $sent)
+	{
+		foreach($required as $param) {
+			if(!isset($sent[$param])) {
+				throw new MissingParamException("Missing parameter: {$param}");
+			}
+		}
+	}
 
-    /**
-     * Throw an exception if email is invalid
-     *
-     * @param string $email
-     *
-     * @return void
-     */
-    public function throwExceptionEmailInvalid($email)
-    {
-        //throw new EmailInvalidException();
-    }
+	/**
+	 * Throw an exception if email already exists
+	 *
+	 * @param string $email
+	 *
+	 * @return void
+	 */
+	public function throwExceptionEmailAlreadyUsed(ModelContract $entity, $email)
+	{
+		if($this->getRepository()->uniqueByEmail($entity, $email))
+			throw new EmailAlreadyUsedException();
+	}
 
-    /**
-     * Throw an exception if password is weak
-     *
-     * @param string $password
-     *
-     * @return void
-     */
-    public function throwExceptionPasswordTooWeak($password)
-    {
+	/**
+	 * Throw an exception if username already exists
+	 *
+	 * @param string $username
+	 *
+	 * @return void
+	 */
+	public function throwExceptionUsernameAlreadyUsed(ModelContract $entity, $username)
+	{
+		if($this->getRepository()->uniqueByUsername($entity, $username))
+			throw new UsernameAlreadyUsedException();
+	}
 
-        if(strlen($password) < 3)
-            throw new PasswordTooWeakException();
-    }
+	/**
+	 * Throw an exception if email is invalid
+	 *
+	 * @param string $email
+	 *
+	 * @return void
+	 */
+	public function throwExceptionEmailInvalid($email)
+	{
+		//throw new EmailInvalidException();
+	}
 
-    /**
-     * Throw an exception if password is weak
-     *
-     * @param string $password
-     * @param string $password_repeat
-     *
-     * @return void
-     */
-    public function throwExceptionMismatchRepeatPassword($password, $password_repeat)
-    {
-        if($password !== $password_repeat)
-            throw new MismatchRepeatPasswordException();
-    }
+	/**
+	 * Throw an exception if password is weak
+	 *
+	 * @param string $password
+	 *
+	 * @return void
+	 */
+	public function throwExceptionPasswordTooWeak($password)
+	{
+
+		if(strlen($password) < 3)
+			throw new PasswordTooWeakException();
+	}
+
+	/**
+	 * Throw an exception if password is weak
+	 *
+	 * @param string $password
+	 * @param string $password_repeat
+	 *
+	 * @return void
+	 */
+	public function throwExceptionMismatchRepeatPassword($password, $password_repeat)
+	{
+		if($password !== $password_repeat)
+			throw new MismatchRepeatPasswordException();
+	}
 
 	/**
 	 * Fill the entity
