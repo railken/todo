@@ -83,9 +83,9 @@ template.getSource = function(source)
  */
 $(document).ready(function()
 {
-	$.map($("xmp[type='template']"),function(tmpl){
+	$.map($("template"),function(tmpl){
 		tmpl = $(tmpl);
-		var name = tmpl.attr('name');
+		var name = tmpl.attr('data-name');
 		template.source[name] = tmpl.html();
 		tmpl.remove();
 	});

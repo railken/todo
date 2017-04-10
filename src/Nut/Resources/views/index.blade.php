@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <xmp type='template' name='sign-in'>@include('Nut::sign-in')</xmp>
+    <template data-name='sign-in'>@include('Nut::sign-in')</template>
 @endsection
 
 @section('scripts')
