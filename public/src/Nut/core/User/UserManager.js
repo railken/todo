@@ -57,3 +57,10 @@ UserManager.prototype.getProfile = function(vars)
 	});
 
 };
+
+UserManager.prototype.authenticate = function(token, vars)
+{	
+	App.get('api').setToken(token);
+	this.storage.token.set(token);
+	return this.getProfile(vars);
+}

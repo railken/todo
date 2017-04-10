@@ -12,7 +12,7 @@
         <a class="btn btn-block btn-social btn-odnoklassniki" style='background: #554488'>
             <span class="fa fa-gitlab"></span> Sign in with GitLab
         </a>
-        <a class="btn btn-block btn-social btn-github">
+        <a class="btn btn-block btn-social btn-github" auth='github'>
             <span class="fa fa-github"></span> Sign in with GitHub
         </a>
     </div>

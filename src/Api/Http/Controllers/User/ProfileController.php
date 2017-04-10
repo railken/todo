@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Core\User\UserManager;
 use Core\User\UserSerializer;
 
-use Core\User\UserSerializer;
-
 class ProfileController extends Controller
 {
 

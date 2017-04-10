@@ -66,9 +66,22 @@
     <script src="{{ assets('Nut::app/providers/RouteServiceProvider.js') }}"></script>
     <script src="{{ assets('Nut::app/providers/AuthServiceProvider.js') }}"></script>
 
+    <script src="{{ assets('Nut::app/layout/sign-in/auth.js') }}"></script>
+    <script src="{{ assets('Nut::app/layout/sign-in/events.js') }}"></script>
+    <script src="{{ assets('Nut::app/layout/sign-in/main.js') }}"></script>
 
     <script>
         var App = new Application();
+
+        function config(name)
+        {
+
+            var configs = {
+                url: "{{ env('APP_URL') }}"
+            };
+
+            return configs[name];
+        }
 
         $(document).ready(function(){
 

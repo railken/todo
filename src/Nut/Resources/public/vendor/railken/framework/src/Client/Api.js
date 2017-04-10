@@ -8,20 +8,6 @@ var Api = function(){
 	this.token = null;
 
 	/**
-	 * Client ID
-	 *
-	 * @var {string
-	 */
-	this.client_id = null;
-
-	/**
-	 * Client Secret
-	 *
-	 * @var {string}
-	 */
-	this.client_secret = null;
-
-	/**
 	 * Api URL
 	 *
 	 * @var {string}}
@@ -55,54 +41,6 @@ Api.prototype.getToken = function()
 
 
 /**
- * Set the client id
- *
- * @param {string} client_id
- *
- * @return this
- */
-Api.prototype.setClientId = function(client_id)
-{
-	this.client_id = client_id;
-
-	return this;
-};
-
-/**
- * Get client id
- *
- * @return {string}
- */
-Api.prototype.getClientId = function()
-{
-	return this.client_id;
-}
-;
-/**
- * Set the client secret
- *
- * @param {string} client_secret
- *
- * @return this
- */
-Api.prototype.setClientSecret = function(client_secret)
-{
-	this.client_secret = client_secret;
-
-	return this;
-};
-
-/**
- * Get client id
- *
- * @return {string}
- */
-Api.prototype.getClientSecret = function()
-{
-	return this.client_secret;
-}
-
-/**
  * Set the url
  *
  * @param {string} url
@@ -124,41 +62,6 @@ Api.prototype.setUrl = function(url)
 Api.prototype.getUrl = function()
 {
 	return this.url;
-};
-
-/**
- * Persist the token
- *
- * @param token
- *
- * @return void
- */
-Api.prototype.persistToken = function(token)
-{	
-	this.setToken(token);
-	this.updateTokenToStorage(token);
-};
-
-/**
- * Persist the token
- *
- * @param token
- *
- * @return void
- */
-Api.prototype.updateTokenToStorage = function(token)
-{	
-	App.getClient().getCookies().set('token', token);
-};
-
-/**
- * Persist the token
- *
- * @return string
- */
-Api.prototype.updateTokenFromStorage = function()
-{	
-	this.setToken(App.getClient().getCookies().get('token'));
 };
 
 /**
@@ -264,8 +167,6 @@ Api.prototype.__call = function(method, url, params, callback){
 	var headers = {};
 	var base_url = url;
 	var url = this.getUrl()+url;
-	console.log(params);
-	console.log(callback);
 
 
 	// Now. Every all

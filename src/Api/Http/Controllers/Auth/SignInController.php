@@ -65,10 +65,7 @@ class SignInController extends Controller
 		if (!$provider)
 			return $this->error(['message' => 'No provider found']);
 		
-		return $this->success([
-			'url' => $provider->getAuthorizeUrl(),
-		]);
-
+		return redirect($provider->getAuthorizeUrl());
 
 	}
 
@@ -109,7 +106,7 @@ class SignInController extends Controller
 
 		$token = $this->issueAccessToken($user);
 
-		return $this->success(['data' => ['token' => $this->serializer->token($token), 'user' => $this->serializer->user($user)]]);
+		return redirect(route('api.oauth.authenticated')."?token=".$this->serializer->token($token)['access_token']);
 
 	}
 

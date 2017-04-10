@@ -9,13 +9,17 @@
 |
 */
 
-Route::post('/oauth/{name}/authorize', ['uses' => 'Auth\SignInController@auth']);
+Route::any('/oauth/{name}/authorize', ['uses' => 'Auth\SignInController@auth']);
 Route::any('/oauth/{name}/token', ['uses' => 'Auth\SignInController@token']);
+Route::any('/oauth/authenticated', ['as' => 'oauth.authenticated', function () {
+	echo 'Redirecting...';
+	die();
+}]);
 
 
 
 Route::group(['middleware' => 'auth:api'], function () {
-	Route::get('/user/profile', ['uses' => 'User\ProfileController@index']);
+	Route::get('/user', ['uses' => 'User\ProfileController@index']);
 
 
 	Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function() {
