@@ -38,7 +38,8 @@ class GithubProvider extends Provider
 	{
 		return $this->url."/authorize?".http_build_query([
 			'client_id' => $this->client_id,
-			'redirect_uri' => $this->getRedirectUri()
+			'redirect_uri' => $this->getRedirectUri(),
+	        'scope' => 'user:email'
 		]);
 	}
 
@@ -56,12 +57,13 @@ class GithubProvider extends Provider
 	            'form_params' => [
 	            	'client_id' => $this->client_id,
 	            	'client_secret' => $this->client_secret,
-	            	'code' => $request->input('code'),
+	            	'code' => $request->input('code')
 	            ],
 	            'headers' => [
 	            	'Accept' => 'application/json'
 	            ]
 	        ];
+
 
 
 	        $response = $client->request('POST', $this->url."/access_token", $params);
@@ -83,8 +85,10 @@ class GithubProvider extends Provider
 	public function getUser($token)
 	{
 		$client = new \GuzzleHttp\Client();
+        $user = new \stdClass;
 
         try {
+        	
 	        $response = $client->request('GET', "https://api.github.com/user", [
 	            'headers' => [
 	            	'Accept' => 'application/json',
@@ -92,16 +96,33 @@ class GithubProvider extends Provider
 	           	],
 	            'http_errors' => false
 	        ]);
+
+        	$body = json_decode($response->getBody());
+
     	} catch (\Exception $e) {
     		return $this->error([]);
     	}
 
-        $body = json_decode($response->getBody());
-
-        $user = new \stdClass;
         $user->username = $body->name;
         $user->avatar = $body->avatar_url;
-        $user->email = $body->email;
+
+        try {
+
+	        $response = $client->request('GET', "https://api.github.com/user/emails", [
+	            'headers' => [
+	            	'Accept' => 'application/json',
+	            	'Authorization' => "token {$token}"
+	           	],
+	            'http_errors' => false
+	        ]);
+        	$body = json_decode($response->getBody());
+
+    	} catch (\Exception $e) {
+    		return $this->error([]);
+    	}
+
+        $user->email = $body[0]->email;
+
         return $user;
 	}
 }

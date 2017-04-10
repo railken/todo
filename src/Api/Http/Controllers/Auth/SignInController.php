@@ -93,14 +93,16 @@ class SignInController extends Controller
 
 		$provider_user = $provider->getUser($response->access_token);
 
-		$user = $this->manager->getRepository()->findByUsername($provider_user->username);
+		$user = $this->manager->getRepository()->findByEmail($provider_user->email);
 
 		if (!$user) {
 
 			$user = $this->manager->create([
 				'username' => $provider_user->username,
 				'role' => 'user',
-				'avatar' => $provider_user->avatar
+				'password' => null,
+				'avatar' => $provider_user->avatar,
+				'email' => $provider_user->email
 			]);
 		}
 
