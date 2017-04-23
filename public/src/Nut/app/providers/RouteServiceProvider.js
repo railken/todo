@@ -36,11 +36,12 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 	App.get('router')
 		.on('/', function() {
-			console.log("I'm home");
-			$('body').html(template.get('home'));
+			$('body').html(template.get('home', {user: App.get('user')}));
+			App.fireEvent('loaded');
 		})
 		.on('/sign-in', function () {
 			$('body').html(template.get('sign-in'));
+			App.fireEvent('loaded');
 		})
 	  	.resolve();
 

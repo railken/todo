@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Railken\Laravel\Manager\ModelContract;
 
+use Core\Project\Project;
+
 class User extends Authenticatable implements ModelContract
 {
 	use HasApiTokens, Notifiable;
@@ -29,4 +31,12 @@ class User extends Authenticatable implements ModelContract
 	protected $hidden = [
 		'password', 'remember_token',
 	];
+
+	/**
+	 * Retrieve projects
+	 */
+	public function projects()
+	{
+		return $this->hasMany(Project::class);
+	}
 }

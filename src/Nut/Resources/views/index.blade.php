@@ -13,6 +13,10 @@
 
     <link rel='stylesheet' href="{{ assets('Nut::vendor/reset/reset/src/reset.css') }}">
     
+    <!-- component -->
+    <link rel='stylesheet' href="{{ assets('Nut::component/toggle/toggle.css') }}">
+
+
     <!-- vendor -->
     <link rel='stylesheet' href="{{ assets('Nut::vendor/bootstrap/bootstrap/src/bootstrap.css') }}">
     <link rel='stylesheet' href="{{ assets('Nut::vendor/bootstrap/bootstrap-social/bootstrap-social.css') }}">
@@ -23,6 +27,8 @@
     
     <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Raleway:100,600">
     <link rel='stylesheet' href="{{assets('Nut::app/layout/sign-in/style.css')}}">
+    <link rel='stylesheet' href="{{assets('Nut::app/layout/home/style.css')}}">
+
 
 @endsection
 
@@ -36,6 +42,7 @@
     </div>
 
     <template data-name='sign-in'>@include('Nut::sign-in')</template>
+    <template data-name='home'>@include('Nut::dashboard')</template>
 @endsection
 
 @section('scripts')
@@ -56,11 +63,19 @@
     <script src="{{ assets('Nut::vendor/railken/framework/src/Client/Client.js') }}"></script>
     <script src="{{ assets('Nut::vendor/railken/framework/src/Client/Cookies.js') }}"></script>
     <script src="{{ assets('Nut::vendor/railken/storage/src/CookieStorage.js') }}"></script>
+    <script src="{{ assets('Nut::vendor/railken/flash/src/Flash.js') }}"></script>
+
+
+    <!-- component -->
+    <script src="{{ assets('Nut::component/toggle/toggle.js') }}"></script>
+
 
     <!-- core -->
     <script src="{{ assets('Nut::core/Entity/Entity.js') }}"></script>
     <script src="{{ assets('Nut::core/User/UserManager.js') }}"></script>
     <script src="{{ assets('Nut::core/User/User.js') }}"></script>
+    <script src="{{ assets('Nut::core/Project/ProjectManager.js') }}"></script>
+    <script src="{{ assets('Nut::core/Project/Project.js') }}"></script>
 
     <!-- app -->
     <script src="{{ assets('Nut::app/providers/RouteServiceProvider.js') }}"></script>
@@ -69,6 +84,7 @@
     <script src="{{ assets('Nut::app/layout/sign-in/auth.js') }}"></script>
     <script src="{{ assets('Nut::app/layout/sign-in/events.js') }}"></script>
     <script src="{{ assets('Nut::app/layout/sign-in/main.js') }}"></script>
+    <script src="{{ assets('Nut::app/layout/home/events.js') }}"></script>
 
     <script>
         var App = new Application();
@@ -83,12 +99,24 @@
             return configs[name];
         }
 
+        function reload()
+        {   
+            App.get('router')._lastRouteResolved = null;
+            App.get('router').resolve();
+        }
+
         $(document).ready(function(){
 
             App.set('api', new Api());
             App.get('api').setUrl("{{ env('APP_API_URL') }}");
+            App.set('flash', new Flash());
 
             App.init();
+
+
+            App.addListener('loaded', function() {
+                toggle.reload();
+            });
 
 
         });
@@ -127,8 +155,8 @@
 
     <script>
         App.addProviders([
-            RouteServiceProvider,
             AuthServiceProvider,
+            RouteServiceProvider,
             AuthenticatedServiceProvider,
             LoaderServiceProvider,
         ]);

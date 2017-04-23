@@ -14,8 +14,9 @@ class Controller extends AppController{
 	 * 
 	 * @return \Illuminate\Http\Response
 	 */
-	public function success($data,$code = 200){
-		return response() -> json(array_merge(['status' => 'success'],$data),$code);
+	public function success($data, $code = 200)
+	{
+		return response()->json(array_merge(['status' => 'success'],$data),$code);
 	}
 
 	/**
@@ -26,8 +27,9 @@ class Controller extends AppController{
 	 * 
 	 * @return \Illuminate\Http\Response
 	 */
-	public function error($data,$code = 200){
-		return response() -> json(array_merge(['status' => 'error'],$data),$code);
+	public function error($data,$code = 200)
+	{
+		return response()->json(array_merge(['status' => 'error'],$data),$code);
 	}
 
 	/**
@@ -38,8 +40,9 @@ class Controller extends AppController{
 	 * 
 	 * @return \Illuminate\Http\Response
 	 */
-	public function not_found($data = [],$code = 404){
-		return response() -> json(array_merge(['status' => 'error','message' => 'not found'],$data),$code);
+	public function not_found($data = [],$code = 404)
+	{
+		return response()->json(array_merge(['status' => 'error','message' => 'not found'],$data),$code);
 	}
 
 	/**
@@ -50,8 +53,9 @@ class Controller extends AppController{
 	 * 
 	 * @return \Illuminate\Http\Response
 	 */
-	public function response($data,$code = 200){
-		return response() -> json($data,$code);
+	public function response($data,$code = 200)
+	{
+		return response()->json($data,$code);
 	}
 
 	/**
@@ -63,10 +67,21 @@ class Controller extends AppController{
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function view($view,$data,$code = 200){
+	public function view($view,$data,$code = 200)
+	{
 		$content = view($view,$data);
 		$response = response($content,$code);
-		$response -> header('Content-Type', 'application/json');
+		$response->header('Content-Type', 'application/json');
 		return $response;
+	}
+
+	/**
+	 * Retrieve user
+	 *
+	 * @return \Core\User\User
+	 */
+	public function getUser()
+	{
+		return \Auth::user();
 	}
 }

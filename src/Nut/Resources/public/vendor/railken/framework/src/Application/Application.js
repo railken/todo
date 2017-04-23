@@ -64,6 +64,12 @@ var Application = function()
 		
 		return this;
 	}
+
+
+	/**
+	 * List of all listeners
+	 */
+	this.events = [];
 };
 
 /**
@@ -231,4 +237,36 @@ Application.prototype.isRoute = function(route)
 Application.prototype.redirectTo = function(url)
 {
 	return window.location.href = url;
+}
+
+Application.prototype.addListener = function(event, callback)
+{
+
+	if (!this.events[event]) {
+		this.events[event] = [];
+	}
+
+	this.events[event].push(callback);
+}
+
+/**
+ * Fire event
+ *
+ * @param name event
+ *
+ * @return void
+ */
+Application.prototype.fireEvent = function(event)
+{
+
+	if (!this.events[event])
+		return;
+
+	var callback;
+
+	for (i in this.events[event]) {
+		callback = this.events[event][i];
+
+		callback();
+	}
 }

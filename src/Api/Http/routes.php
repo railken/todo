@@ -21,6 +21,18 @@ Route::any('/oauth/authenticated', ['as' => 'oauth.authenticated', function () {
 Route::group(['middleware' => 'auth:api'], function () {
 	Route::get('/user', ['uses' => 'User\ProfileController@index']);
 
+	Route::group(['prefix' => 'user', 'namespace' => 'User'], function() {
+
+		Route::group(['prefix' => 'projects'], function() {
+			Route::get('/', ['uses' => 'ProjectsController@index'] );
+			Route::post('/', ['uses' => 'ProjectsController@create'] );
+			Route::get('/{id}', ['uses' => 'ProjectsController@show'] );
+			Route::put('/{id}', ['uses' => 'ProjectsController@update'] );
+			Route::delete('/{ids}', ['uses' => 'ProjectsController@delete'] );
+		});
+	} );
+
+
 
 	Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::group(['prefix' => 'users'], function() {

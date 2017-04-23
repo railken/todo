@@ -4,8 +4,15 @@ namespace Api\Exceptions;
 
 use Railken\Laravel\App\Exceptions\ExceptionHandler;
 use Exception;
+use Railken\Laravel\Manager\Exceptions\MissingParamException;
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler{
+
+	protected $exceptions = [
+		MissingParamException::class,
+	];
 
 	/**
 	 * Report or log an exception.
@@ -28,8 +35,36 @@ class Handler extends ExceptionHandler{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function render($request, Exception $exception)
-	{
+	{	
+		if ($request->wantsJson())
+    	{
 
+			if ($exception instanceof NotFoundHttpException) {
+				return response()->json([
+					'status' => 'error',
+					'message' => 'not found'
+				]);
+			}
+
+			$exceptions = collect($this->exceptions);
+			
+			$in = $exceptions->search(function($class, $key) use($exception){
+				return $exception instanceof $class;
+			});
+
+
+
+
+			if ($in !== false) {
+
+
+				return response()->json([
+					'status' => 'error',
+					'message' => $exception->getMessage(),
+				], 400);
+
+			}
+		}
 		# Return only if render is different
 		// return parent::render($request, $exception);
 	}

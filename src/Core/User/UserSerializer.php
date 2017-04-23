@@ -5,6 +5,8 @@ namespace Core\User;
 use Core\User\User;
 use League\OAuth2\Server\CryptKey;
 
+use Core\Project\ProjectSerializer;
+
 class UserSerializer
 {
 
@@ -13,8 +15,18 @@ class UserSerializer
 		return [
 			'id' => $user->id,
 			'username' => $user->username,
-			'email' => $user->email
+			'email' => $user->email,
+			'projects' => $this->projects($user->projects)
 		];
+	}
+
+	public function projects($projects)
+	{
+		$serializer = new ProjectSerializer;
+
+		return $projects->map(function($project) use ($serializer){
+			return $serializer->all($project);
+		});
 	}
 
 	public function token($token)
