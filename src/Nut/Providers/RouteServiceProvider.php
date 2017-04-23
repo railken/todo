@@ -34,7 +34,6 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapRoutes();
-
     }
     
     /**
@@ -46,13 +45,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapRoutes()
     {
-        
         Route::group([
             'middleware' => 'web',
             'namespace' => $this->namespace,
-        ],function ($router){
+        ], function ($router) {
             require base_path("src/Nut/Http/routes.php");
         });
     }
-
 }

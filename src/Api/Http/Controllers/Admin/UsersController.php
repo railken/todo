@@ -10,31 +10,29 @@ use Railken\Laravel\Manager\ModelContract;
 
 use Illuminate\Http\Request;
 
-
 class UsersController extends Controller
 {
 
-	/**
-	 * Construct
-	 *
-	 * @param UserManager $manager
-	 */
-	public function __construct(UserManager $manager, UserSerializer $serializer)
-	{
-		$this->manager = $manager;
-		$this->serializer = $serializer;
-	}
+    /**
+     * Construct
+     *
+     * @param UserManager $manager
+     */
+    public function __construct(UserManager $manager, UserSerializer $serializer)
+    {
+        $this->manager = $manager;
+        $this->serializer = $serializer;
+    }
 
-	/**
-	 * Return an array rappresentation of entity
-	 *
-	 * @param Railken\Laravel\Manager\ModelContract $user
-	 *
-	 * @return array
-	 */
-	public function serialize(ModelContract $user)
-	{
-		return $this->serializer->user($user);
-	}
-
+    /**
+     * Return an array rappresentation of entity
+     *
+     * @param Railken\Laravel\Manager\ModelContract $user
+     *
+     * @return array
+     */
+    public function serialize(ModelContract $user)
+    {
+        return $this->serializer->user($user);
+    }
 }

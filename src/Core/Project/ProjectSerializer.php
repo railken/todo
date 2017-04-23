@@ -4,11 +4,11 @@ namespace Core\Project;
 
 class ProjectSerializer
 {
-	public function all(Project $project)
-	{
-		return [
-			'id' => $project->id,
-			'name' => $project->name
-		];
-	}
+    public function all(Project $project)
+    {
+        return [
+            'id' => $project->id,
+            'name' => $project->name
+        ];
+    }
 }

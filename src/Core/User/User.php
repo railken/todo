@@ -12,31 +12,31 @@ use Core\Project\Project;
 
 class User extends Authenticatable implements ModelContract
 {
-	use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable;
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable = [
-		'username', 'name', 'email', 'password', 'role'
-	];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'username', 'name', 'email', 'password', 'role'
+    ];
 
-	/**
-	 * The attributes that should be hidden for arrays.
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-		'password', 'remember_token',
-	];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
-	/**
-	 * Retrieve projects
-	 */
-	public function projects()
-	{
-		return $this->hasMany(Project::class);
-	}
+    /**
+     * Retrieve projects
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

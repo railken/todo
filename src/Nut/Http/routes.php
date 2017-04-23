@@ -9,4 +9,6 @@
 |
 */
 
-Route::get('/', ['as' => 'index',	function() {	return view('Nut::index'); }]);
+Route::get('/', ['as' => 'index',    function () {
+    return view('Nut::index');
+}]);

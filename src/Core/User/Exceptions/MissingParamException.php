@@ -4,6 +4,6 @@ namespace Core\User\Exceptions;
 
 use Exception;
 
-class MissingParamException extends Exception{
-	
+class MissingParamException extends Exception
+{
 }

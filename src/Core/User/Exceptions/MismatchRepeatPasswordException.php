@@ -4,6 +4,6 @@ namespace Core\User\Exceptions;
 
 use Exception;
 
-class MismatchRepeatPasswordException extends Exception{
-	
+class MismatchRepeatPasswordException extends Exception
+{
 }

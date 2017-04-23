@@ -4,6 +4,6 @@ namespace Core\User\Exceptions;
 
 use Exception;
 
-class WeakPasswordException extends Exception{
-	
+class WeakPasswordException extends Exception
+{
 }

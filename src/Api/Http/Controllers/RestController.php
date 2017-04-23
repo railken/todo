@@ -8,193 +8,186 @@ use Api\Helper\Paginator;
 use Railken\Laravel\Manager\ModelContract;
 use Illuminate\Http\Request;
 
-
 abstract class RestController extends Controller
 {
 
-	/**
-	 * Return a new instance of Manager
-	 *
-	 * @return UserManager
-	 */
-	public function getManager()
-	{
-		return $this->manager;
-	}
+    /**
+     * Return a new instance of Manager
+     *
+     * @return UserManager
+     */
+    public function getManager()
+    {
+        return $this->manager;
+    }
 
-	/**
-	 * Return an array rappresentation of entity
-	 *
-	 * @param ModelContract $entity
-	 *
-	 * @return array
-	 */
-	public function serialize(ModelContract $entity)
-	{
-		return [
-			'id' => $entity->id,
-		];
-	}
+    /**
+     * Return an array rappresentation of entity
+     *
+     * @param ModelContract $entity
+     *
+     * @return array
+     */
+    public function serialize(ModelContract $entity)
+    {
+        return [
+            'id' => $entity->id,
+        ];
+    }
 
-	/**
-	 * Return a json response of view list
-	 *
-	 * @param Request $request
-	 *
-	 * @return Response
-	 */
-	public function index(Request $request)
-	{
+    /**
+     * Return a json response of view list
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function index(Request $request)
+    {
+        $manager = $this->getManager();
 
-		$manager = $this->getManager();
+        $query = $manager->getRepository()->getQuery();
 
-		$query = $manager->getRepository()->getQuery();
+        $searches = $request->input('search', []);
 
-		$searches = $request->input('search', []);
+        $query->where(function ($qb) use ($searches) {
+            foreach ($searches as $name => $search) {
+                $qb->orWhere($name, $search);
+            }
+        });
 
-		$query->where(function($qb) use($searches) {
-			foreach ($searches as $name => $search) {
-				$qb->orWhere($name, $search);
-			}
-		});
+        $paginator = Paginator::retrieve($query, $request->input('page', 1), $request->input('show', 10));
 
-		$paginator = Paginator::retrieve($query, $request->input('page', 1), $request->input('show', 10));
+        $sort = [
+            'field' => strtolower($request->input('sort_field', 'id')),
+            'direction' => strtolower($request->input('sort_direction', 'desc')),
+        ];
 
-		$sort = [
-			'field' => strtolower($request->input('sort_field', 'id')),
-			'direction' => strtolower($request->input('sort_direction', 'desc')),
-		];
-
-		$results = $query
-			->orderBy($sort['field'], $sort['direction'])
-			->skip($paginator->getFirstResult())
-			->take($paginator->getMaxResults())
-			->get();
-
-
-		foreach ($results as $n => $k) {
-			$results[$n] = $this->serialize($k);
-		}
-
-		return $this->success([
-			'message' => 'ok',
-			'data' => [
-				'resources' => $results,
-				'pagination' => $paginator,
-				'sort' => $sort,
-				'search' => $searches,
-			]
-		]);
-
-	}
-
-	/**
-	 * Return a json response to insert
-	 *
-	 * @param Request $request
-	 *
-	 * @return Response
- 	 */
-	public function create(Request $request)
-	{
-
-		$manager = $this->getManager();
-
-		$parameters = $request->all();
-		$parameters['user'] = $this->getUser();
-
-		$entity = $manager->create($parameters);
-		
-		return $this->show($entity->id, $request);
-
-	}
+        $results = $query
+            ->orderBy($sort['field'], $sort['direction'])
+            ->skip($paginator->getFirstResult())
+            ->take($paginator->getMaxResults())
+            ->get();
 
 
-	/**
-	 * Return a json response to get
-	 *
-	 * @param Request $request
-	 *
-	 * @return Response
-	*/
-	public function show($id, Request $request)
-	{
+        foreach ($results as $n => $k) {
+            $results[$n] = $this->serialize($k);
+        }
 
-		$manager = $this->getManager();
+        return $this->success([
+            'message' => 'ok',
+            'data' => [
+                'resources' => $results,
+                'pagination' => $paginator,
+                'sort' => $sort,
+                'search' => $searches,
+            ]
+        ]);
+    }
 
-		$entity = $manager->find($id);
+    /**
+     * Return a json response to insert
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function create(Request $request)
+    {
+        $manager = $this->getManager();
 
-		if ($this->getUser() && $this->getUser()->id != $entity->user->id) {
-			abort(501);
-		}
+        $parameters = $request->all();
+        $parameters['user'] = $this->getUser();
 
-		if (empty($entity))
-			abort(404);
-
-		return $this->success([
-			'message' => 'ok',
-			'data' => [
-				'resources' => $this->serialize($entity)
-			]
-		]);
+        $entity = $manager->create($parameters);
+        
+        return $this->show($entity->id, $request);
+    }
 
 
-	}
-	/**
-	 * Return a json response to insert
-	 *
-	 * @param Request $request
-	 *
-	 * @return Response
-	 */
-	public function update($id, Request $request)
-	{
-		$manager = $this->getManager();
+    /**
+     * Return a json response to get
+     *
+     * @param Request $request
+     *
+     * @return Response
+    */
+    public function show($id, Request $request)
+    {
+        $manager = $this->getManager();
 
-		$entity = $manager->find($id);
+        $entity = $manager->find($id);
 
-		if (empty($entity))
-			abort(404);
+        if ($this->getUser() && $this->getUser()->id != $entity->user->id) {
+            abort(501);
+        }
 
-		if ($this->getUser() && ($this->getUser()->id != $entity->user->id))
-			abort(501);
-		
+        if (empty($entity)) {
+            abort(404);
+        }
 
-		$manager->update($entity, $request->all());
+        return $this->success([
+            'message' => 'ok',
+            'data' => [
+                'resources' => $this->serialize($entity)
+            ]
+        ]);
+    }
+    /**
+     * Return a json response to insert
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function update($id, Request $request)
+    {
+        $manager = $this->getManager();
 
-		return $this->show($entity->id, $request);
+        $entity = $manager->find($id);
 
-	}
+        if (empty($entity)) {
+            abort(404);
+        }
 
-	/**
-	 * Return a json response to insert
-	 *
-	 * @Route("/{id}")
-	 *  @Method("DELETE")
-	 *
-	 * @param Request $request
-	 *
-	 * @return Response
-	*/
-	public function delete($id, Request $request)
-	{
+        if ($this->getUser() && ($this->getUser()->id != $entity->user->id)) {
+            abort(501);
+        }
+        
 
-		$manager = $this->getManager();
+        $manager->update($entity, $request->all());
 
-		$entity = $manager->find($id);
+        return $this->show($entity->id, $request);
+    }
 
-		if (empty($entity))
-			abort(404);
+    /**
+     * Return a json response to insert
+     *
+     * @Route("/{id}")
+     *  @Method("DELETE")
+     *
+     * @param Request $request
+     *
+     * @return Response
+    */
+    public function delete($id, Request $request)
+    {
+        $manager = $this->getManager();
 
-		if ($this->getUser() && ($this->getUser()->id != $entity->user->id))
-			abort(501);
+        $entity = $manager->find($id);
 
-		$manager->delete($entity);
+        if (empty($entity)) {
+            abort(404);
+        }
 
-		return $this->success([
-			'message' => 'ok'
-		]);
+        if ($this->getUser() && ($this->getUser()->id != $entity->user->id)) {
+            abort(501);
+        }
 
-	}
+        $manager->delete($entity);
 
+        return $this->success([
+            'message' => 'ok'
+        ]);
+    }
 }

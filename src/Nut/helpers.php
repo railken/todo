@@ -9,19 +9,19 @@
  */
 function assets($path, $secure = null)
 {
+    $path = explode("::", $path);
 
-	$path = explode("::", $path);
+    if (isset($path[1])) {
+        $path = "src/".$path[0]."/".$path[1];
+    } else {
+        $path = $path[0];
+    }
 
-	if (isset($path[1])) {
-		$path = "src/".$path[0]."/".$path[1];
-	} else {
-		$path = $path[0];
-	}
-
-	if(file_exists($path))
-		$path = $path."?v=".filemtime($path);
+    if (file_exists($path)) {
+        $path = $path."?v=".filemtime($path);
+    }
 
     $path = asset($path, $secure);
 
-	return $path;
+    return $path;
 }
