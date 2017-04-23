@@ -34,16 +34,71 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 	var hash = '#!';
 	App.set('router', new Navigo(root, useHash, hash));
 
+	var container = $('main');
 	App.get('router')
+
+				
+		/*
+		|--------------------------------------------------------------------------
+		| Index
+		|--------------------------------------------------------------------------
+		|
+		*/
 		.on('/', function() {
-			$('body').html(template.get('home', {user: App.get('user')}));
+
+			container.html(template.get('layout', {user: App.get('user')}));
+			$('.content').html(template.get('home', {user: App.get('user')}));
+
 			App.fireEvent('loaded');
 		})
-		.on('/sign-in', function () {
-			$('body').html(template.get('sign-in'));
+
+		/*
+		|--------------------------------------------------------------------------
+		| Project
+		|--------------------------------------------------------------------------
+		|
+		*/
+		.on('projects/:id', function (params) {
+
+			var pm = new ProjectManager();
+
+			pm.get(params.id, {
+				success: function(project) {
+
+					container.html(template.get('layout', {user: App.get('user')}));
+					
+					// Refresh content
+					$('.content').html(template.get('project', {project: project, user: App.get('user')}));
+
+					App.fireEvent('loaded');
+				},
+				error: function(response) {
+
+					var message = response && response.code == '404' ? 'Project not found' : response.message;
+					
+					return App.get('flash').error(message); 
+				}
+			});
+		})
+
+		/*
+		|--------------------------------------------------------------------------
+		| Sign In
+		|--------------------------------------------------------------------------
+		|
+		*/
+		.on('sign-in', function () {
+			console.log('a');
+			container.html(template.get('sign-in'));
 			App.fireEvent('loaded');
 		})
 	  	.resolve();
 
+		$('body').on('click', "[data-href]", function(e) {
+			e.preventDefault();
+
+
+			App.get('router').navigate($(this).attr('data-href'));
+		});
 	next();
 };

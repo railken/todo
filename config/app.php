@@ -179,6 +179,7 @@ return [
         Railken\Laravel\App\AppServiceProvider::class,
         Railken\Laravel\Manager\ManagerServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Radic\BladeExtensions\BladeExtensionsServiceProvider::class
 
     ],
 

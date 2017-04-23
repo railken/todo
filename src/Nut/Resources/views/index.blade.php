@@ -41,12 +41,15 @@
         </div>
     </div>
 
+    <template data-name='layout'>@include('Nut::base')</template>
     <template data-name='sign-in'>@include('Nut::sign-in')</template>
-    <template data-name='home'>@include('Nut::dashboard')</template>
+    <template data-name='home'>@include('Nut::home')</template>
+    <template data-name='project'>@include('Nut::project')</template>
 @endsection
 
 @section('scripts')
-
+    
+    <script src="{{ assets('Nut::app/layout/main.js') }}"></script>
     <!-- vendor -->
     <script src="{{ assets('Nut::vendor/navigo/navigo/navigo.min.js') }}"></script>
 
@@ -68,6 +71,7 @@
 
     <!-- component -->
     <script src="{{ assets('Nut::component/toggle/toggle.js') }}"></script>
+    <script src="{{ assets('Nut::component/modal/modal.js') }}"></script>
 
 
     <!-- core -->
@@ -101,8 +105,15 @@
 
         function reload()
         {   
+            // Close all modals
+            $('.modal.in').modal('hide');
+            
+            // Reload route
             App.get('router')._lastRouteResolved = null;
             App.get('router').resolve();
+
+            $('.modal-backdrop.fade.in').remove();
+            
         }
 
         $(document).ready(function(){

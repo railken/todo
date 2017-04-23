@@ -18,10 +18,9 @@
     </head>
     <body>
         
+        <main></main>
+        @section('body')@show
         
-        @section('body')
-            Default Body Content
-        @show
 
         @section('scripts')
             

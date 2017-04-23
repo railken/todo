@@ -1,6 +1,10 @@
 var User = function(attributes)
 {
 
+	// Convert Array into Collection;
+	attributes.projects = collect(attributes.projects);
+
+	console.log(attributes.projects);
 	this.fill(attributes);
 
 };

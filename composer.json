@@ -12,7 +12,8 @@
         "laravel/passport": "^2.0",
         "laravel/tinker": "~1.0",
         "railken/laravel-application": "*@dev",
-        "railken/laravel-manager": "*@dev"
+        "railken/laravel-manager": "*@dev",
+        "radic/blade-extensions": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

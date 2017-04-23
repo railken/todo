@@ -1,4 +1,4 @@
-$('body').on('submit', '.projects_add', function(e) {
+$('body').on('submit', '.projects-add', function(e) {
 	e.preventDefault();
 
 	var pm = new ProjectManager();
@@ -15,5 +15,28 @@ $('body').on('submit', '.projects_add', function(e) {
 			App.get('flash').error(response.message);
 		},
 	})
+
+});
+
+$('body').on('submit', '.projects-delete', function(e) {
+	e.preventDefault();
+
+	var pm = new ProjectManager();
+
+	var id = $(this).find("[name='id']").val();
+
+
+	pm.delete(
+		id,
+		{
+			success: function(project) {
+				App.get('user').projects.removeByAttribute('id', id);
+				reload();
+			},
+			error: function(response) {
+				App.get('flash').error(response.message);
+			},
+		}
+	)
 
 });
