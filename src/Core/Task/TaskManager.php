@@ -4,6 +4,7 @@ namespace Core\Task;
 
 use Railken\Laravel\Manager\ModelContract;
 use Railken\Laravel\Manager\ModelManager;
+use Core\Task\Exceptions as Exceptions;
 
 use Core\Task\Task;
 
@@ -59,6 +60,10 @@ class TaskManager extends ModelManager
 
         $entity->user()->associate($this->vars->get('user', $entity->user));
         $entity->project()->associate($this->vars->get('project', $entity->project));
+
+        if ($entity->project->user->id != $entity->user->id) {
+            throw new Exceptions\AccessDeniedException();
+        }
 
         $this->throwExceptionParamsNull([
             'title' => $entity->title,
