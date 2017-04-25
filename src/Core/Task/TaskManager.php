@@ -7,6 +7,9 @@ use Railken\Laravel\Manager\ModelManager;
 
 use Core\Task\Task;
 
+use Core\User\UserManager;
+use Core\Project\ProjectManager;
+
 class TaskManager extends ModelManager
 {
 
@@ -16,6 +19,7 @@ class TaskManager extends ModelManager
     public function __construct()
     {
         $this->repository = new TaskRepository();
+        parent::__construct();
     }
 
     /**
@@ -28,7 +32,15 @@ class TaskManager extends ModelManager
      */
     public function fill(ModelContract $entity, array $params)
     {
-        $params = $this->getOnlyParams($params, ['name']);
+        $params = $this->getOnlyParams($params, ['title', 'priority', 'expires_at', 'user_id', 'user', 'project_id', 'project']);
+
+        if (isset($params['user']) || isset($params['user_id'])) {
+            $this->vars['user'] = $this->fillManyToOneById($entity, new UserManager(), $params, 'user');
+        }
+
+           if (isset($params['project']) || isset($params['project_id'])) {
+            $this->vars['project'] = $this->fillManyToOneById($entity, new ProjectManager(), $params, 'project');
+        }
 
         $entity->fill($params);
 
@@ -44,8 +56,14 @@ class TaskManager extends ModelManager
      */
     public function save(ModelContract $entity)
     {
+
+        $entity->user()->associate($this->vars->get('user', $entity->user));
+        $entity->project()->associate($this->vars->get('project', $entity->project));
+
         $this->throwExceptionParamsNull([
-            'name' => $entity->name,
+            'title' => $entity->title,
+            'user' => $entity->user,
+            'project' => $entity->project
         ]);
 
         return parent::save($entity);

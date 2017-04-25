@@ -5,6 +5,7 @@ namespace Api\Exceptions;
 use Railken\Laravel\App\Exceptions\ExceptionHandler;
 use Exception;
 use Railken\Laravel\Manager\Exceptions\MissingParamException;
+use Railken\Laravel\Manager\Exceptions\ModelByIdNotFoundException;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -12,6 +13,7 @@ class Handler extends ExceptionHandler
 {
     protected $exceptions = [
         MissingParamException::class,
+        ModelByIdNotFoundException::class,
     ];
 
     /**
@@ -40,7 +42,7 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'status' => 'error',
                     'message' => 'not found'
-                ]);
+                ], 404);
             }
 
             $exceptions = collect($this->exceptions);
@@ -56,7 +58,7 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'status' => 'error',
                     'message' => $exception->getMessage(),
-                ], 400);
+                ], 404);
             }
         }
         # Return only if render is different

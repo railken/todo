@@ -118,12 +118,13 @@ abstract class RestController extends Controller
 
         $entity = $manager->find($id);
 
-        if ($this->getUser() && $this->getUser()->id != $entity->user->id) {
-            abort(501);
-        }
 
         if (empty($entity)) {
             abort(404);
+        }
+
+        if ($this->getUser() && $this->getUser()->id != $entity->user->id) {
+            abort(501);
         }
 
         return $this->success([
