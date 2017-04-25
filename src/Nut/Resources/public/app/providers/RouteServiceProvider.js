@@ -62,6 +62,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 			var pm = new ProjectManager();
 
+
 			pm.get(params.id, {
 				success: function(project) {
 

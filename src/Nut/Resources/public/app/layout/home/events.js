@@ -91,3 +91,31 @@ $('body').on('submit', '.tasks-add', function(e) {
 	})
 
 });
+
+$('body').on('submit', '.tasks-edit', function(e) {
+	e.preventDefault();
+
+	var manager = new TaskManager();
+
+	var id = $(this).find("[name='id']").val();
+	var name = $(this).find("[name='name']").val();
+
+	$(this).closest("[data-container]").find('.tasks-title').html(name);
+
+	manager.update(
+		id,
+		{
+			params: {
+				title: name
+			},
+			success: function(project) {
+				
+				reload();
+			},
+			error: function(response) {
+				App.get('flash').error(response.message);
+			},
+		}
+	)
+
+});
