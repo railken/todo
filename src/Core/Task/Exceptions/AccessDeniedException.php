@@ -2,7 +2,7 @@
 
 namespace Core\Task\Exceptions;
 
-use Exceptions;
+use Exception;
 
 class AccessDeniedException extends Exception
 {
