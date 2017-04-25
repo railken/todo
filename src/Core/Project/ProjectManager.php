@@ -8,6 +8,7 @@ use Railken\Laravel\Manager\ModelManager;
 use Core\Project\Project;
 
 use Core\User\UserManager;
+use Core\Task\TaskManager;
 
 class ProjectManager extends ModelManager
 {
@@ -71,5 +72,25 @@ class ProjectManager extends ModelManager
     public function toArray(ModelContract $entity)
     {
         return [];
+    }
+
+
+    /**
+     * Remove a ModelContract
+     *
+     * @param Railken\Laravel\Manager\ModelContract $entity
+     *
+     * @return void
+     */
+    public function delete(ModelContract $entity)
+    {
+
+        $tm = new TaskManager();
+
+        foreach ($entity->tasks as $task) {
+            $tm->delete($task);
+        }
+
+        return parent::delete($entity);
     }
 }

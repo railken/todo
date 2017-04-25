@@ -26,7 +26,7 @@ $('body').on('submit', '.projects-delete', function(e) {
 	var id = $(this).find("[name='id']").val();
 
 	App.get('user').projects.removeByAttribute('id', id);
-	
+
 	$(".projects-element[data-id='"+id+"']").remove();
 
 	pm.delete(
@@ -120,6 +120,30 @@ $('body').on('submit', '.tasks-edit', function(e) {
 			error: function(response) {
 				App.get('flash').error(response.message);
 			},
+		}
+	)
+
+});
+
+$('body').on('click', '.task-done', function(e) {
+
+	var manager = new TaskManager();
+
+	var container = $(this).closest('.tasks-container');
+	var id = $(this).attr('data-id');
+	container.addClass('removed');
+
+	manager.done(
+		id,
+		{
+			success: function(project) {
+				
+				container.remove();
+				reload();
+			},
+			error: function(response) {
+				App.get('flash').error(response.message);
+			}
 		}
 	)
 

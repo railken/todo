@@ -5,15 +5,15 @@
 <div class='tasks'>
 	{#tasks.resources}
 
-		<div class='toggle' data-status='1' data-container='tasks'>
+		<div class='tasks-container toggle' data-status='1' data-container='tasks'>
 			<div data-panel='1'>
 
 				<div class='fluid task fluid-vcenter' data-id='{id}'>
-					<div class='task-check' data-priority='{priority}'>
+					<div class='task-check task-done' data-id='{id}' data-priority='{priority}'>
 
 					</div>
-					<div data-open='2'>
-						<span class='tasks-title'>{title}</span>
+					<div data-open='2' class='noselect tasks-element fluid'>
+						<span class='tasks-title fill'>{title}</span>
 					</div>
 				</div>
 

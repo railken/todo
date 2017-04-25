@@ -26,14 +26,14 @@ class Task extends Model implements ModelContract
      *
      * @var array
      */
-    protected $fillable = ['title', 'priority', 'expires_at', 'user_id', 'project_id'];
+    protected $fillable = ['title', 'priority', 'expires_at', 'user_id', 'project_id', 'done', 'done_at'];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'expires_at'];
+    protected $dates = ['deleted_at', 'expires_at', 'done_at'];
 
     /**
      * Get the user that owns the task

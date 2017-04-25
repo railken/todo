@@ -71,7 +71,7 @@ class TaskManager extends ModelManager
         if ($entity->project->user->id != $entity->user->id) {
             throw new Exceptions\AccessDeniedException();
         }
-        
+
         return parent::save($entity);
     }
 
@@ -85,5 +85,37 @@ class TaskManager extends ModelManager
     public function toArray(ModelContract $entity)
     {
         return [];
+    }
+
+    /**
+     * Set a task as done
+     *
+     * @param ModelContract $entity
+     *
+     * @return ModelContract
+     */
+    public function done(ModelContract $entity)
+    {
+        $entity->done_at = new \DateTime();
+        $entity->done = true;
+        $entity->save();
+        
+        return $entity;
+    }
+
+    /**
+     * Set a task as undone
+     *
+     * @param ModelContract $entity
+     *
+     * @return ModelContract
+     */
+    public function undone(ModelContract $entity)
+    {
+        $entity->done_at = null;
+        $entity->done = false;
+        $entity->save();
+        
+        return $entity;
     }
 }

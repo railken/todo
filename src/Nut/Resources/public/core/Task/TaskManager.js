@@ -112,3 +112,45 @@ TaskManager.prototype.delete = function(id, vars)
         error: vars.error
     });
 };
+
+/**
+ * Set a task as done
+ *
+ * @param {integer} id
+ * @param {object} vars
+ *
+ * @return void
+ */
+TaskManager.prototype.done = function(id, vars)
+{
+
+    App.get('api').basicCall('POST', '/user/tasks/'+id+'/done' , {
+        params: {},
+        success: function(response) {
+            vars.success(new Task(response.data.resources));
+        },
+        error: vars.error,
+    });
+
+};
+
+/**
+ * Set a task as undone
+ *
+ * @param {integer} id
+ * @param {object} vars
+ *
+ * @return void
+ */
+TaskManager.prototype.undone = function(id, vars)
+{
+
+    App.get('api').basicCall('POST', '/user/tasks/'+id+'/undone' , {
+        params: {},
+        success: function(response) {
+            vars.success(new Task(response.data.resources));
+        },
+        error: vars.error,
+    });
+
+};

@@ -17,13 +17,8 @@ class TaskSerializer
 			'priority' => $task->priority,
 			'expires_at' => $task->expires_at ? $task->expires_at->format('Y-m-d') : null,
 			'expired' => $task->isExpired(),
-			'user' => [
-				'id' => $task->user->id,
-			],
-			'project' => [
-				'id' => $task->project->id,
-			],
-
+			'done' => $task->done,
+			'done_at' =>  $task->done_at ? $task->done_at->format('Y-m-d H:i:s') : null,
 		];
 	}
 }

@@ -70,6 +70,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 					var search = {};
 					search['project_id'] = project.id;
+					search['done'] = 0;
 
 					// Add attribute active for current project
 

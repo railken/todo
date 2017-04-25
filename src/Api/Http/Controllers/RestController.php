@@ -52,7 +52,7 @@ abstract class RestController extends Controller
 
         $query->where(function ($qb) use ($searches) {
             foreach ($searches as $name => $search) {
-                $qb->orWhere($name, $search);
+                $qb->where($name, $search);
             }
         });
 

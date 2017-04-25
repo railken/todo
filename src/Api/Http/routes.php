@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/', ['uses' => 'TasksController@create']);
             Route::get('/{id}', ['uses' => 'TasksController@show']);
             Route::put('/{id}', ['uses' => 'TasksController@update']);
+            Route::post('/{id}/done', ['uses' => 'TasksController@done']);
+            Route::post('/{id}/undone', ['uses' => 'TasksController@undone']);
             Route::delete('/{ids}', ['uses' => 'TasksController@delete']);
         });
     });
