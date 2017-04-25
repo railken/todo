@@ -25,11 +25,16 @@ $('body').on('submit', '.projects-delete', function(e) {
 
 	var id = $(this).find("[name='id']").val();
 
+	App.get('user').projects.removeByAttribute('id', id);
+	
+	$(".projects-element[data-id='"+id+"']").remove();
 
 	pm.delete(
 		id,
 		{
 			success: function(project) {
+
+            	$('.modal-backdrop.fade.in').remove();
 				App.get('router').navigate('/');
 			},
 			error: function(response) {

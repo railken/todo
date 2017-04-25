@@ -18,7 +18,7 @@
 
         {#user.projects}
 
-            <li class='toggle {#active}active{/active}' data-status='1' data-container='projects'>
+            <li class='toggle {#active}active{/active} projects-element' data-status='1' data-container='projects' data-id='{id}'>
                 <div data-panel='1' class='fluid fluid-vcenter'>
                     <div class="dropdown">
                         <span class="project-dropdown dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

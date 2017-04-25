@@ -42,7 +42,7 @@
 	        <form method='POST' class='tasks-add container-actions'>
 	        	<input type='hidden' name='project_id' value='{project.id}'>
 	            <div class='fluid'>
-	                <input type='text' class='form-control' name='name'>
+	                <input type='text' class='form-control' name='name' autocomplete='off'>
 	            </div>
 	            <div class='fluid fluid-vcenter bar-actions'>
 	                <button data-open='1' type='submit' class='btn btn-primary'>Add task</button>
