@@ -3,17 +3,26 @@ var toggle = {};
 toggle.change = function(element)
 {
 
+	var container = element.attr('data-container');
+
+	if (container) {
+		$.map($(".toggle[data-container='"+container+"']"), function(el) {
+			$(el).find("[data-panel]").hide();
+			$(el).find("[data-panel='1']").show();
+		});
+	}
+
 	element.find("[data-panel]").hide();
 
 	var value = element.attr('data-status');
 	element.find("[data-panel='"+value+"']").show();
+
 }
 
 
 toggle.reload = function()
 {
 
-	console.log('a');
 	$.map($('.toggle'), function(el) {
 		toggle.change($(el));
 	});

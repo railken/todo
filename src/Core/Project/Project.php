@@ -7,6 +7,7 @@ use Railken\Laravel\Manager\ModelContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Core\User\User;
+use Core\Task\Task;
 
 class Project extends Model implements ModelContract
 {
@@ -41,4 +42,13 @@ class Project extends Model implements ModelContract
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * The tasks associated with the project
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
 }

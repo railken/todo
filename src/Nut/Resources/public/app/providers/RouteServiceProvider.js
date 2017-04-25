@@ -62,6 +62,8 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 			var pm = new ProjectManager();
 
+			console.log('aaaa');
+
 			pm.get(params.id, {
 				success: function(project) {
 
@@ -70,7 +72,11 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 					var search = {};
 					search['project_id'] = project.id;
 
-					console.log(search);
+					// Add attribute active for current project
+
+					App.get('user').projects.map(function(element) {element.active = false});
+					k = App.get('user').projects.findByAttribute('id', project.id);
+					App.get('user').projects[k].active = true;
 
 					tm.list({
 						params: {search: search},

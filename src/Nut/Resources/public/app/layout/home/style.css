@@ -43,6 +43,11 @@ nav .nav-list {
 
 .nav-list .nav-element {
 	padding: 7px 6px;
+	font-size: 14px;
+}
+
+.nav-list .nav-element.editing {
+	padding: 0 6px;
 }
 
 .nav-list > * {
@@ -67,8 +72,13 @@ nav .nav-list {
 }
 
 
-.project-list > *:hover .nav-element {
+.project-list > *:hover .nav-element:not(.editing) {
 	background: white;
+}
+
+.project-list > *.active .nav-element:not(.editing) {
+	background: white;
+	font-weight: bold;
 }
 
 .project-list > * .project-dropdown {
@@ -85,7 +95,12 @@ nav .nav-list {
 	margin:10px 0;
 }
 
-.projects-add .bar-actions >*:first-child, .tasks-add .bar-actions >*:first-child  {
+.project-tasks {
+	opacity: 0.5;
+	font-size: 12px;
+}
+
+.container-actions .bar-actions >*:first-child  {
 	margin-right: 10px;
 }
 

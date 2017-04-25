@@ -44,6 +44,26 @@ ProjectManager.prototype.get = function(id, vars)
 };
 
 
+/**
+ * Update a project
+ *
+ * @param {integer} id
+ * @param {object} vars
+ *
+ * @return void
+ */
+ProjectManager.prototype.update = function(id, vars)
+{
+
+    App.get('api').basicCall('PUT', '/user/projects/'+id , {
+        params: vars.params,
+        success: function(response) {
+            vars.success(new Project(response.data.resources));
+        },
+        error: vars.error,
+    });
+
+};
 
 /**
  * Delete project given id

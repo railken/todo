@@ -8,7 +8,8 @@ class ProjectSerializer
     {
         return [
             'id' => $project->id,
-            'name' => $project->name
+            'name' => $project->name,
+            'tasks' => $project->tasks->count(),
         ];
     }
 }

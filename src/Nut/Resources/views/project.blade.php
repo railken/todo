@@ -19,7 +19,7 @@
 	        <span data-open='2' class='action'><i class='fa fa-plus'></i>Add task</span>
 	    </div>
 	    <div class='fluid' data-panel='2'>
-	        <form method='POST' class='tasks-add'>
+	        <form method='POST' class='tasks-add container-actions'>
 	            <div class='fluid'>
 	                <input type='text' class='form-control' name='name'>
 	            </div>
