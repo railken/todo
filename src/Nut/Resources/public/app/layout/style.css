@@ -1,0 +1,88 @@
+html, body, main {
+    background-color: #fff;
+
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-flow: column;
+}
+
+body {
+	color: rgb(32, 32, 32);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 100;
+    font-size: 13px;
+}
+
+a {
+    color: #636b6f;
+}
+
+
+.fluid {
+	display: flex;
+}
+
+.fluid-vcenter {
+	align-items: center;
+}
+
+.fill {
+	flex-grow: 1;
+}
+
+.link {
+	cursor:pointer;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+.fluid-cleft {
+	justify-content: flex-start;
+	text-align: left;
+}
+
+.dropdown-menu .dropdown-item{
+	display: block;
+	padding: 8px 12px;
+}
+
+.dropdown-menu .dropdown-item:hover{
+
+}
+
+.dropdown-divider {
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    margin: 5px 0;
+}
+.form-control {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+
+.btn {
+	border-radius: 1px;
+}
+
+.btn-primary {
+	background: #505061;
+	border: none;
+}
+
+.btn-primary:hover {
+	background: #7c7c97;
+}
+
+
+.action {
+	cursor: pointer;
+}
+.action i {
+	margin-right: 12px;
+}
+
+.action {
+	color: #db4c3f;
+}

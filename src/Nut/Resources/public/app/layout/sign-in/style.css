@@ -1,17 +1,4 @@
- html, body, main {
-    background-color: #fff;
-    color: #636b6f;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 300;
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-flow: column;
-}
 
-a {
-    color: #636b6f;
-}
 
 .full-height {
     height: 100vh;
@@ -39,7 +26,6 @@ p {
 }
 .content {
     text-align: center;
-    font-size: 16px;
 }
 
 .title {

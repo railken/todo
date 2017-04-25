@@ -24,8 +24,10 @@
     <link rel='stylesheet' href="{{ assets('Nut::vendor/railken/template/src/Template.css') }}">
     <link rel='stylesheet' href="{{ assets('Nut::vendor/font-awesome/font-awesome/src/css/font-awesome.css') }}">
 
-    
-    <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Raleway:100,600">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin-ext,cyrillic-ext' rel='stylesheet' type='text/css'>
+
+    <link rel='stylesheet' href="{{assets('Nut::app/layout/style.css')}}">
+
     <link rel='stylesheet' href="{{assets('Nut::app/layout/sign-in/style.css')}}">
     <link rel='stylesheet' href="{{assets('Nut::app/layout/home/style.css')}}">
 
@@ -80,6 +82,8 @@
     <script src="{{ assets('Nut::core/User/User.js') }}"></script>
     <script src="{{ assets('Nut::core/Project/ProjectManager.js') }}"></script>
     <script src="{{ assets('Nut::core/Project/Project.js') }}"></script>
+    <script src="{{ assets('Nut::core/Task/TaskManager.js') }}"></script>
+    <script src="{{ assets('Nut::core/Task/Task.js') }}"></script>
 
     <!-- app -->
     <script src="{{ assets('Nut::app/providers/RouteServiceProvider.js') }}"></script>

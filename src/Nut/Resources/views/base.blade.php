@@ -55,7 +55,7 @@
                     </div>
                     <div class='fluid fluid-vcenter bar-actions'>
                         <button data-open='1' type='submit' class='btn btn-primary'>Add project</button>
-                        <span data-open='1' class=''>Cancel</span>
+                        <span data-open='1' class='link'>Cancel</span>
                     </div>
                 </form>
             </div>

@@ -65,12 +65,27 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 			pm.get(params.id, {
 				success: function(project) {
 
-					container.html(template.get('layout', {user: App.get('user')}));
-					
-					// Refresh content
-					$('.content').html(template.get('project', {project: project, user: App.get('user')}));
+					var tm = new TaskManager();
 
-					App.fireEvent('loaded');
+					var search = {};
+					search['project_id'] = project.id;
+
+					console.log(search);
+
+					tm.list({
+						params: {search: search},
+						success: function(tasks) {
+							container.html(template.get('layout', {user: App.get('user')}));
+							
+							// Refresh content
+							$('.content').html(template.get('project', {project: project, tasks: tasks, user: App.get('user')}));
+
+							App.fireEvent('loaded');
+						},
+						error: function(response) {
+
+						}
+					});
 				},
 				error: function(response) {
 

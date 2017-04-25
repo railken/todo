@@ -1,6 +1,6 @@
 main {
 	background: #fafafa;
-	font-weight: 600;
+    font-size: 14px;
 }
 
 header {
@@ -12,19 +12,6 @@ header {
 	z-index: 3;
     position: relative;
 }
-
-.fluid {
-	display: flex;
-}
-
-.fluid-vcenter {
-	align-items: center;
-}
-
-.fill {
-	flex-grow: 1;
-}
-
 .container {
 	max-width: 1024px;
 	height: 100%;
@@ -98,53 +85,32 @@ nav .nav-list {
 	margin:10px 0;
 }
 
-.projects-add .bar-actions >*:first-child {
+.projects-add .bar-actions >*:first-child, .tasks-add .bar-actions >*:first-child  {
 	margin-right: 10px;
 }
 
 /**
- * General
+ * Tasks
  */
-.dropdown-menu .dropdown-item{
-	display: block;
-	padding: 8px 12px;
+.task-check {
+	width: 22px;
+	height: 22px;
+	border-radius: 25px;
+	border: 2px solid;
+	border-color: #efefef;
+	margin:5px 0;
+	margin-right: 10px;
 }
 
-.dropdown-menu .dropdown-item:hover{
-
+.task-check[data-priority='3'] {
+	border-color: #ac0000;
+	background: #f5e5e5;
 }
 
-.dropdown-divider {
-    border-bottom: 1px solid rgba(0,0,0,.15);
-    margin: 5px 0;
-}
-.form-control {
-    border-radius: 0;
-    box-shadow: none;
+.tasks .form-control[name="name"] {
+	margin:10px 0;
 }
 
-
-.btn {
-	border-radius: 1px;
-}
-
-.btn-primary {
-	background: #505061;
-	border: none;
-}
-
-.btn-primary:hover {
-	background: #7c7c97;
-}
-
-
-.action {
-	cursor: pointer;
-}
-.action i {
-	margin-right: 12px;
-}
-
-.action {
-	color: #db4c3f;
+.tasks-add-container > div, .tasks-add-container .tasks-add{
+	width: 100%;
 }
