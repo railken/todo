@@ -16,13 +16,16 @@ TaskManager.prototype.list = function(vars)
 {   
 
 
-    if (!vars.show)
-        vars.show = 100;
+    if (!vars.params.show)
+        vars.params.show = 100;
 
-    if (!vars.page)
-        vars.page = 1;
+    if (!vars.params.page)
+        vars.params.page = 1;
 
+    if (!vars.params.sort_direction)
+        vars.params.sort_direction = 'asc';
 
+    console.log(vars);
     App.get('api').basicCall('GET', '/user/tasks', {
         params: vars.params,
         success: function(response) {
