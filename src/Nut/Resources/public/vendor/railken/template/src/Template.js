@@ -54,10 +54,6 @@ template.get = function(source, vars)
 	
 	Mustache.parse(source, ['{','}']);
 
-	vars.embed = function(text, render) {
-		return "a"; //render(template.get(text), vars);
-	};
-
 	var rendered = Mustache.render(source, vars);
 
 	return rendered;

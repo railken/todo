@@ -156,6 +156,7 @@
                     console.log('to login');
 
                     App.get('router').navigate('/sign-in');
+                    next();
                 } else {
 
                     next();
