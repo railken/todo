@@ -61,9 +61,6 @@ class TaskManager extends ModelManager
         $entity->user()->associate($this->vars->get('user', $entity->user));
         $entity->project()->associate($this->vars->get('project', $entity->project));
 
-        if ($entity->project->user->id != $entity->user->id) {
-            throw new Exceptions\AccessDeniedException();
-        }
 
         $this->throwExceptionParamsNull([
             'title' => $entity->title,
@@ -71,6 +68,10 @@ class TaskManager extends ModelManager
             'project' => $entity->project
         ]);
 
+        if ($entity->project->user->id != $entity->user->id) {
+            throw new Exceptions\AccessDeniedException();
+        }
+        
         return parent::save($entity);
     }
 

@@ -20,6 +20,7 @@
 	    </div>
 	    <div class='fluid' data-panel='2'>
 	        <form method='POST' class='tasks-add container-actions'>
+	        	<input type='hidden' name='project_id' value='{project.id}'>
 	            <div class='fluid'>
 	                <input type='text' class='form-control' name='name'>
 	            </div>
