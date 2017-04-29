@@ -194,6 +194,8 @@
         var LoaderServiceProvider = function() {
             this.name = 'loader';
             this.initialize = function(self, next) {
+
+                App.get('router').resolve();
                 $('.page-loader').remove();
                 next();
             };
@@ -202,24 +204,17 @@
         var AuthenticatedServiceProvider = function() {
 
             // This will handle redirect for guest user
-            // If a guest is still in this page (for some reason), without a token 
-            // will not be able to do anything
 
             this.name = 'authenticated';
             this.initialize = function(self, next) {
 
                 if (!App.get('user')) {
 
-                    // TODO: add the login in main page
-                    // For now, just redirect to home
-                    console.log('to login');
-
                     App.get('router').navigate('/sign-in');
-                    next();
-                } else {
+                    
 
-                    next();
                 }
+                next();
             };
         };
     </script>

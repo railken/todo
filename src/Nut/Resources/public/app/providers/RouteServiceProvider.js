@@ -16,6 +16,35 @@ var RouteServiceProvider = function()
 };
 
 
+RouteServiceProvider.prototype.getTemplateMain = function()
+{
+
+	/** Main layout **/
+	var main = template
+		.define('main')
+		.source('layout')
+		.vars({user: App.get('user') })
+		.container(function() {
+			return $('main'); 
+		});
+
+	/** List projects **/
+	template
+		.define('nav-projects')
+		.source('nav-projects')
+		.vars({user: App.get('user') })
+		.container(function() {
+			return $('.nav-projects');
+		})
+		.ready(function() {
+			toggle.reload();
+		})
+		.parent(main);
+
+	return main;
+
+}
+
 
 /**
  * Initialize the provider
@@ -36,28 +65,6 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 	var container = $('main');
 
-	/** Main layout **/
-	var main = template
-		.define('main')
-		.source('layout')
-		.vars({user: App.get('user')})
-		.container(function() {
-			return $('main'); 
-		});
-
-	/** List projects **/
-	template
-		.define('nav-projects')
-		.source('nav-projects')
-		.vars({user: App.get('user')})
-		.container(function() {
-			return $('.nav-projects');
-		})
-		.ready(function() {
-			toggle.reload();
-		})
-		.parent(main);
-
 	App.get('router')
 
 				
@@ -69,6 +76,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 		*/
 		.on('/', function() {
 
+			var main = self.getTemplateMain();
 			template
 				.define('home')
 				.source('home')
@@ -77,6 +85,9 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 					return $('.content'); 
 				})
 				.parent(main);
+
+			console.log('Loading home');
+			console.log(App.get('user'));
 
 
 			template.load('main');
@@ -92,6 +103,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 		*/
 		.on('projects/:id', function (params) {
 
+			var main = self.getTemplateMain();
 			var project = App.get('user').projects.getByAttribute('id', params.id);
 
 			if (!project) {
@@ -121,11 +133,10 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 		|
 		*/
 		.on('sign-in', function () {
-			console.log('a');
+			
 			container.html(template.get('sign-in'));
 			App.fireEvent('loaded');
-		})
-	  	.resolve();
+		});
 
 		$('body').on('click', "[data-href]", function(e) {
 			e.preventDefault();

@@ -66,7 +66,6 @@ User.prototype.getTaskBy = function(name, value)
 
 	for (var i in this.projects) {
 
-		console.log(this.projects[i]);
 		task = this.projects[i].getTaskBy(name, value);
 
 		if (task)

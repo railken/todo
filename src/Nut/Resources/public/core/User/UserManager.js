@@ -51,6 +51,7 @@ UserManager.prototype.getProfile = function(vars)
 	App.get('api').basicCall('GET', '/user', {
 		params: vars.params,
 		success: function(response) {
+			console.log(response);
 			vars.success(new User(response.data.resource));
 		},
 		error: vars.error,
@@ -62,5 +63,5 @@ UserManager.prototype.authenticate = function(token, vars)
 {	
 	App.get('api').setToken(token);
 	this.storage.token.set(token);
-	return this.getProfile(vars);
+	this.getProfile(vars);
 }
