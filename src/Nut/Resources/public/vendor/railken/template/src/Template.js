@@ -70,8 +70,6 @@ template.html = function(html, destination)
  */
 template.get = function(source, vars)
 {
-	console.log(source, vars);
-
 	var source = template.getSource(source).html();
 
 	Mustache.parse(source, ['{','}']);
@@ -95,7 +93,12 @@ template.get = function(source, vars)
 template.load = function(name)
 {	
 
-	var templates = this.parts[name].load();
+	try {
+		var templates = this.parts[name].load();
+	} catch (e) {
+		return null;
+
+	}
 
 	templates.map(function(part) {
 

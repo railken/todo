@@ -92,6 +92,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 			template.load('main');
 
+			App.set('route', {name: 'home'});
 			App.fireEvent('loaded');
 		})
 
@@ -104,7 +105,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 		.on('projects/:id', function (params) {
 
 			var main = self.getTemplateMain();
-			var project = App.get('user').projects.getByAttribute('id', params.id);
+			var project = App.get('user').getProjectById(params.id);
 
 			if (!project) {
 				App.get('flash').error('Project not found'); 
@@ -123,6 +124,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 
 
 			template.load('main');
+			App.set('route', {name: 'project', data: project});
 			App.fireEvent('loaded');
 		})
 
@@ -135,6 +137,8 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 		.on('sign-in', function () {
 			
 			container.html(template.get('sign-in'));
+
+			App.set('route', {name: 'sign-in'});
 			App.fireEvent('loaded');
 		});
 

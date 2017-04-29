@@ -65,8 +65,12 @@ ProjectResolver.prototype.remove = function(id)
 	self.manager.delete(
 		id,
 		{
-			success: function(project) {
+			success: function() {
 				self.template();
+
+				if (App.get('route').name == 'project' && App.get('route').data.id == id) {
+					App.get('router').navigate('/');
+				}
 			},
 			error: function(response) {
 				App.get('flash').error(response.message);
