@@ -93,7 +93,7 @@
             </li>
         {/user.projects}
         </ul>
-
+        
     </template>
     <template data-name='layout'>@include('Nut::base')</template>
     <template data-name='sign-in'>@include('Nut::sign-in')</template>
@@ -141,6 +141,8 @@
     <script src="{{ assets('Nut::app/providers/RouteServiceProvider.js') }}"></script>
     <script src="{{ assets('Nut::app/providers/AuthServiceProvider.js') }}"></script>
 
+
+    <script src="{{ assets('Nut::app/resolvers/ProjectResolver.js') }}"></script>
     <script src="{{ assets('Nut::app/layout/sign-in/auth.js') }}"></script>
     <script src="{{ assets('Nut::app/layout/sign-in/events.js') }}"></script>
     <script src="{{ assets('Nut::app/layout/sign-in/main.js') }}"></script>

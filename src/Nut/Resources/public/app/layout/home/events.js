@@ -1,90 +1,40 @@
 $('body').on('submit', '.projects-add', function(e) {
 	e.preventDefault();
+	var input_name = $(this).find("[name='name']");
 
-	var pm = new ProjectManager();
-	var name = $(this).find("[name='name']").val();
-	var project = new Project({id: null, name: name, tasks: {
-		undone: 0,
-		done: 0,
-		list: []
-	}});
+	var resolver = new ProjectResolver();
+	resolver.create({
+		name: input_name.val()
+	});
 
-	App.get('user').projects.push(project);
-	template.load('nav-projects');
-
-	pm.create({
-		params: {
-			name: name,
-		},
-		success: function(project) {
-			var index = App.get('user').projects.findByAttribute('name', project.name);
-			App.get('user').projects[index] = project;
-			template.load('nav-projects');
-		},
-		error: function(response) {
-			App.get('flash').error(response.message);
-		},
-	})
-
+	input_name.val('');
 });
 
 $('body').on('submit', '.projects-delete', function(e) {
 	e.preventDefault();
 	$('.modal').modal('hide');
-
-	var pm = new ProjectManager();
-
 	var id = $(this).find("[name='id']").val();
 
-	App.get('user').projects.removeByAttribute('id', id);
-
-	template.load('nav-projects');
-
-	pm.delete(
-		id,
-		{
-			success: function(project) {
-
-				template.load('nav-projects');
-
-			},
-			error: function(response) {
-				App.get('flash').error(response.message);
-			},
-		}
-	)
-
+	var resolver = new ProjectResolver();
+	resolver.remove(id);
+	
 });
 
 
 $('body').on('submit', '.projects-edit', function(e) {
+	
 	e.preventDefault();
 
-	var pm = new ProjectManager();
-
 	var id = $(this).find("[name='id']").val();
-	var name = $(this).find("[name='name']").val();
+	var input_name = $(this).find("[name='name']");
 
-	App.get('user').projects.getByAttribute('id', id).name = name;
-	template.load('nav-projects');
+	var resolver = new ProjectResolver();
 
-	pm.update(
-		id,
-		{
-			params: {
-				name: name
-			},
-			success: function(project) {
-					
-				var index = App.get('user').projects.findByAttribute('name', project.name);
-				App.get('user').projects[index] = project;
-				template.load('nav-projects');
-			},
-			error: function(response) {
-				App.get('flash').error(response.message);
-			},
-		}
-	)
+	resolver.update(id, {
+		name: input_name.val()
+	});
+
+	input_name.val('');
 
 });
 

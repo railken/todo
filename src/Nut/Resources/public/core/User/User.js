@@ -2,9 +2,10 @@ var User = function(attributes)
 {
 
 	// Convert Array into Collection;
-	attributes.projects = collect(attributes.projects);
+	attributes.projects = attributes.projects.map(function(project) {
+		return new Project(project);
+	});
 
-	console.log(attributes.projects);
 	this.fill(attributes);
 
 };
