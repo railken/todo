@@ -19,7 +19,6 @@ $('body').on('show.bs.modal', '.modal', function (event) {
 				break;
 			}
 
-			console.log(this.nodeName);
 		}
 	});
 

@@ -86,9 +86,6 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 				})
 				.parent(main);
 
-			console.log('Loading home');
-			console.log(App.get('user'));
-
 
 			template.load('main');
 

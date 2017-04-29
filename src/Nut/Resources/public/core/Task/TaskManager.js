@@ -25,7 +25,6 @@ TaskManager.prototype.list = function(vars)
     if (!vars.params.sort_direction)
         vars.params.sort_direction = 'asc';
 
-    console.log(vars);
     App.get('api').basicCall('GET', '/user/tasks', {
         params: vars.params,
         success: function(response) {

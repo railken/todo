@@ -51,7 +51,6 @@ UserManager.prototype.getProfile = function(vars)
 	App.get('api').basicCall('GET', '/user', {
 		params: vars.params,
 		success: function(response) {
-			console.log(response);
 			vars.success(new User(response.data.resource));
 		},
 		error: vars.error,

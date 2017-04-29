@@ -146,7 +146,7 @@
     <script src="{{ assets('Nut::app/resolvers/TaskResolver.js') }}"></script>
     <script src="{{ assets('Nut::app/layout/sign-in/auth.js') }}"></script>
     <script src="{{ assets('Nut::app/layout/sign-in/events.js') }}"></script>
-    <script src="{{ assets('Nut::app/layout/sign-in/main.js') }}"></script>
+    <!--<script src="{{ assets('Nut::app/layout/sign-in/main.js') }}"></script>-->
     <script src="{{ assets('Nut::app/layout/home/events.js') }}"></script>
 
     <script>

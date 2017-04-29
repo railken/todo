@@ -140,8 +140,6 @@ Application.prototype.executeProvider = function(index)
 
 	var provider = this.providers[index].provider;
 
-	console.log("ServiceProvider: ", this.providers[index].provider.name);
-
 	// Send a callback to execute the next provider when the service has ended execution
 	provider.initialize(provider, function(){
 	

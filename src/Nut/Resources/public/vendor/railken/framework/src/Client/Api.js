@@ -168,9 +168,6 @@ Api.prototype.__call = function(method, url, params, callback){
 	var base_url = url;
 	var url = this.getUrl()+url;
 
-
-	// Now. Every all
-	
 	var self = this;
 
 	if (this.getToken() != null) {
@@ -191,7 +188,6 @@ Api.prototype.__call = function(method, url, params, callback){
 		success: function(response) {
 			self.stackDone(base_url);
 
-			console.log(response);
 			callback(response);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
