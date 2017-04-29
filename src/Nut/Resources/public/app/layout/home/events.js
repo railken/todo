@@ -41,21 +41,12 @@ $('body').on('submit', '.projects-edit', function(e) {
 $('body').on('submit', '.tasks-add', function(e) {
 	e.preventDefault();
 
-	var tm = new TaskManager();
+	var resolver = new TaskResolver();
 
-	tm.create({
-		params: {
-			title: $(this).find("[name='name']").val(),
-			project_id: $(this).find("[name='project_id']").val(),
-		},
-		success: function() {
-			reload();
-		},
-		error: function(response) {
-			console.log(response);
-			App.get('flash').error(response.message);
-		},
-	})
+	resolver.create({
+		title: $(this).find("[name='name']").val(),
+		project_id: $(this).find("[name='project_id']").val(),
+	});
 
 });
 

@@ -4,24 +4,40 @@ var ProjectResolver = function()
 	this.manager = new ProjectManager();
 };
 
+/**
+ * Reload template
+ *
+ * @return void
+ */
+ProjectResolver.prototype.template = function()
+{
+	template.load('nav-projects');
+}
 
+/**
+ * Create a new project
+ *
+ * @var {object} attributes
+ *
+ * @return void
+ */
 ProjectResolver.prototype.create = function(attributes)
 {
 
-
+	var self = this;
 	var project = Project.create(attributes);
+	var tmp_id = project.uid;
 	App.get('user').projects.push(project);
 
-	template.load('nav-projects');
 
-	this.manager.create({
+	self.template();
+
+	self.manager.create({
 		params: attributes,
 		success: function(project) {
 
-			// By name? Uhm...
-			var index = App.get('user').projects.findByAttribute('name', project.name);
-			App.get('user').projects[index].fill(project);
-			template.load('nav-projects');
+			App.get('user').getProjectBy('uid', tmp_id).fill(project);
+			self.template();
 		},
 		error: function(response) {
 			App.get('flash').error(response.message);
@@ -30,17 +46,27 @@ ProjectResolver.prototype.create = function(attributes)
 
 };
 
+/**
+ * Remove a project
+ *
+ * @param {integer} id
+ *
+ * @return void
+ */
 ProjectResolver.prototype.remove = function(id)
 {
 
-	App.get('user').projects.removeByAttribute('id', id);
-	template.load('nav-projects');
+	var self = this;
 
-	this.manager.delete(
+	App.get('user').removeProjectBy('id', id);
+	
+	self.template();
+
+	self.manager.delete(
 		id,
 		{
 			success: function(project) {
-				template.load('nav-projects');
+				self.template();
 			},
 			error: function(response) {
 				App.get('flash').error(response.message);
@@ -50,30 +76,35 @@ ProjectResolver.prototype.remove = function(id)
 
 };
 
+/**
+ * Update a project
+ *
+ * @param {integer} id
+ * @param {object} attributes
+ *
+ * @return void
+ */
 ProjectResolver.prototype.update = function(id, attributes)
 {
 
-	// Retrieve and update local project
-	var project = App.get('user').projects.getByAttribute('id', id);
-	project.fill(attributes);
+	var self = this;
 
-	// Reload template
-	template.load('nav-projects');
+	App.get('user').getProjectById(id).fill(attributes);
 
-	// Send API request
-	this.manager.update(
+	self.template();
+
+	self.manager.update(
 		id,
 		{
 			params: attributes,
 			success: function(project) {
 
-				var index = App.get('user').projects.findByAttribute('id', project.id);
-				App.get('user').projects[index].fill(project);
-				template.load('nav-projects');
+				App.get('user').getProjectById(project.id).fill(project);
+				self.template();
 			},
 			error: function(response) {
 				App.get('flash').error(response.message);
-				template.load('nav-projects');
+				self.template();
 			},
 		}
 	)

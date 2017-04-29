@@ -101,7 +101,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 			}
 
 			template
-				.define('home')
+				.define('content')
 				.source('project')
 				.vars({project: project, tasks: project.tasks, user: App.get('user')})
 				.container(function() {
