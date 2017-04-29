@@ -35,6 +35,29 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 	App.set('router', new Navigo(root, useHash, hash));
 
 	var container = $('main');
+
+	/** Main layout **/
+	var main = template
+		.define('main')
+		.source('layout')
+		.vars({user: App.get('user')})
+		.container(function() {
+			return $('main'); 
+		});
+
+	/** List projects **/
+	template
+		.define('nav-projects')
+		.source('nav-projects')
+		.vars({user: App.get('user')})
+		.container(function() {
+			return $('.nav-projects');
+		})
+		.ready(function() {
+			toggle.reload();
+		})
+		.parent(main);
+
 	App.get('router')
 
 				
@@ -46,8 +69,17 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 		*/
 		.on('/', function() {
 
-			container.html(template.get('layout', {user: App.get('user')}));
-			$('.content').html(template.get('home', {user: App.get('user')}));
+			template
+				.define('home')
+				.source('home')
+				.vars({user: App.get('user')})
+				.container(function() {
+					return $('.content'); 
+				})
+				.parent(main);
+
+
+			template.load('main');
 
 			App.fireEvent('loaded');
 		})
@@ -60,46 +92,26 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 		*/
 		.on('projects/:id', function (params) {
 
-			var pm = new ProjectManager();
+			var project = App.get('user').projects.getByAttribute('id', params.id);
+
+			if (!project) {
+				App.get('flash').error('Project not found'); 
+				App.get('router').navigate("/");
+				return;
+			}
+
+			template
+				.define('home')
+				.source('project')
+				.vars({project: project, tasks: project.tasks, user: App.get('user')})
+				.container(function() {
+					return $('.content');
+				})
+				.parent(main);
 
 
-			pm.get(params.id, {
-				success: function(project) {
-
-					var tm = new TaskManager();
-
-					var search = {};
-					search['project_id'] = project.id;
-					search['done'] = 0;
-
-					// Add attribute active for current project
-
-					App.get('user').projects.map(function(element) {element.active = false});
-					k = App.get('user').projects.findByAttribute('id', project.id);
-					App.get('user').projects[k].active = true;
-
-					tm.list({
-						params: {search: search},
-						success: function(tasks) {
-							container.html(template.get('layout', {user: App.get('user')}));
-							
-							// Refresh content
-							$('.content').html(template.get('project', {project: project, tasks: tasks, user: App.get('user')}));
-
-							App.fireEvent('loaded');
-						},
-						error: function(response) {
-
-						}
-					});
-				},
-				error: function(response) {
-
-					var message = response && response.code == '404' ? 'Project not found' : response.message;
-					
-					return App.get('flash').error(message); 
-				}
-			});
+			template.load('main');
+			App.fireEvent('loaded');
 		})
 
 		/*

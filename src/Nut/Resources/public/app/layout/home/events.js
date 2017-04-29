@@ -2,14 +2,24 @@ $('body').on('submit', '.projects-add', function(e) {
 	e.preventDefault();
 
 	var pm = new ProjectManager();
+	var name = $(this).find("[name='name']").val();
+	var project = new Project({id: null, name: name, tasks: {
+		undone: 0,
+		done: 0,
+		list: []
+	}});
+
+	App.get('user').projects.push(project);
+	template.load('nav-projects');
 
 	pm.create({
 		params: {
-			name: $(this).find("[name='name']").val(),
+			name: name,
 		},
 		success: function(project) {
-			App.get('user').projects.push(project);
-			reload();
+			var index = App.get('user').projects.findByAttribute('name', project.name);
+			App.get('user').projects[index] = project;
+			template.load('nav-projects');
 		},
 		error: function(response) {
 			App.get('flash').error(response.message);
@@ -20,6 +30,7 @@ $('body').on('submit', '.projects-add', function(e) {
 
 $('body').on('submit', '.projects-delete', function(e) {
 	e.preventDefault();
+	$('.modal').modal('hide');
 
 	var pm = new ProjectManager();
 
@@ -27,15 +38,15 @@ $('body').on('submit', '.projects-delete', function(e) {
 
 	App.get('user').projects.removeByAttribute('id', id);
 
-	$(".projects-element[data-id='"+id+"']").remove();
+	template.load('nav-projects');
 
 	pm.delete(
 		id,
 		{
 			success: function(project) {
 
-            	$('.modal-backdrop.fade.in').remove();
-				App.get('router').navigate('/');
+				template.load('nav-projects');
+
 			},
 			error: function(response) {
 				App.get('flash').error(response.message);
@@ -55,7 +66,7 @@ $('body').on('submit', '.projects-edit', function(e) {
 	var name = $(this).find("[name='name']").val();
 
 	App.get('user').projects.getByAttribute('id', id).name = name;
-	$(this).closest("[data-container]").find('.project-title').html(name);
+	template.load('nav-projects');
 
 	pm.update(
 		id,
@@ -64,9 +75,10 @@ $('body').on('submit', '.projects-edit', function(e) {
 				name: name
 			},
 			success: function(project) {
-				
-				reload();
-				// Request has already been made
+					
+				var index = App.get('user').projects.findByAttribute('name', project.name);
+				App.get('user').projects[index] = project;
+				template.load('nav-projects');
 			},
 			error: function(response) {
 				App.get('flash').error(response.message);

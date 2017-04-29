@@ -1,9 +1,9 @@
 <h1>{project.name}</h1>
 
-<h3> A total of {tasks.pagination.total} tasks. It's time to fix!</h3>
+<h3> A total of {tasks.undone} tasks. It's time to fix!</h3>
 
 <div class='tasks'>
-	{#tasks.resources}
+	{#tasks.list}
 
 		<div class='tasks-container toggle' data-status='1' data-container='tasks'>
 			<div data-panel='1'>
@@ -32,7 +32,7 @@
                 </form>
 			</div>
 		</div>
-	{/tasks.resources}
+	{/tasks.list}
 	<br>
 	<div class='fluid toggle tasks-add-container fluid-cleft' data-status='1'>
 		<div data-panel='1'>

@@ -1,11 +1,33 @@
 var template = {};
 
 /**
+ * List of all vars used in sources
+ *
+ * @var array
+ */
+template.vars = [];
+
+/**
  * List of all source template
  *
  * @var {array}
  */
 template.source = {};
+
+template.parts = [];
+
+template.define = function(name)
+{
+
+	
+	var tmpl = new TemplatePart();
+
+	this.parts[name] = tmpl;
+
+	return tmpl;
+
+}
+
 
 /**
  * Set html using a template
@@ -51,14 +73,39 @@ template.get = function(source, vars)
 
 	var source = template.getSource(source).html();
 
-	
 	Mustache.parse(source, ['{','}']);
+
 
 	var rendered = Mustache.render(source, vars);
 
 	return rendered;
 
 };
+
+
+/**
+ * load a template
+ *
+ * @param {string} source template
+ *
+ * @return void
+ */
+template.load = function(name)
+{	
+
+	var templates = this.parts[name].load();
+
+	templates.map(function(part) {
+
+		var container = part._container();
+
+		container.html(template.get(part._source, part._vars));
+
+		part._ready();
+
+	});
+
+}
 
 
 /**
@@ -91,3 +138,58 @@ $(document).ready(function()
 		tmpl.remove();
 	});
 });
+
+var TemplatePart = function()
+{
+
+	this.children = [];
+	this._ready = function(){};
+};
+
+TemplatePart.prototype.target = function(target)
+{
+	this._target = target;
+	return this;
+};
+
+TemplatePart.prototype.container = function(container)
+{
+	this._container = container;
+	return this;
+};
+
+TemplatePart.prototype.vars = function(vars)
+{
+	this._vars = vars;
+	return this;
+};
+
+TemplatePart.prototype.source = function(source)
+{
+	this._source = source;
+	return this;
+};
+
+TemplatePart.prototype.parent = function(parent)
+{
+	parent.children.push(this);
+	this._parent = parent;
+	return this;
+};
+
+TemplatePart.prototype.ready = function(ready)
+{
+	this._ready = ready;
+	return this;
+};
+
+TemplatePart.prototype.load = function()
+{
+	var templates = [this];
+
+	for (i in this.children) {
+		templates.push(this.children[i]);
+	}
+	return templates;
+
+};

@@ -11,6 +11,8 @@ Object.defineProperty(Array.prototype, 'getByAttribute', {
 			if (this[i][attribute] == value)
 				return this[i];
 		}
+
+		return null;
 	}
 });
 
@@ -22,6 +24,8 @@ Object.defineProperty(Array.prototype, 'findByAttribute', {
 			if (this[i][attribute] == value)
 				return i;
 		}
+
+		return null;
 	}
 });
 
@@ -30,7 +34,7 @@ Object.defineProperty(Array.prototype, 'removeByAttribute', {
     value:  function(attribute, value)
 	{
 		var index = this.findByAttribute(attribute, value);
-		return this.remove(index);
+		return index !== null ? this.remove(index) : null;
 	}	
 });
 
