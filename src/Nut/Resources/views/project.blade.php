@@ -1,6 +1,6 @@
 <h1>{project.name}</h1>
 
-<h3> A total of {tasks.undone} tasks. It's time to fix!</h3>
+<h3> A total of {tasks.list.length} tasks. It's time to fix!</h3>
 
 <div class='tasks'>
 	{#tasks.list}

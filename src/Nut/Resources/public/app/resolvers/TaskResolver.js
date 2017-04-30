@@ -32,7 +32,7 @@ TaskResolver.prototype.create = function(attributes)
 
 	var task = Task.create(attributes);
 
-	App.get('user').getProjectById(task.project_id).tasks.list.push(task);
+	App.get('user').getProjectById(task.project_id).addTask(task);
 	var tmp_id = task.uid;
 	this.template();
 
@@ -41,7 +41,7 @@ TaskResolver.prototype.create = function(attributes)
 	this.manager.create({
 		params: attributes,
 		success: function(task) {
-			
+
 			App.get('user').getTaskBy('uid', tmp_id).fill(task);
 
 			self.template();

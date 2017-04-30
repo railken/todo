@@ -73,3 +73,17 @@ Project.prototype.removeTaskBy = function(name, value)
 {
 	return this.tasks.list.removeByAttribute(name, value);
 }
+
+
+/**
+ * Add a task
+ *
+ * @param {Task}
+ *
+ * @return void
+ */
+Project.prototype.addTask = function(task)
+{
+	this.tasks.list.push(task);
+};
+

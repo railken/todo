@@ -72,7 +72,7 @@
                     <div class='nav-element fluid fluid-vcenter' data-href='projects/{id}'>
 
                         <i class='fa fa-circle project-icon'></i>
-                        <span class='fill'><span class='project-title'>{name}</span> <span class='project-tasks'>{tasks.undone}</span></span>
+                        <span class='fill'><span class='project-title'>{name}</span> <span class='project-tasks'>{tasks.list.length}</span></span>
                     </div>
                 </div>
                 <div data-panel='2'>
