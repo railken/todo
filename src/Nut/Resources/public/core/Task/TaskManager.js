@@ -107,7 +107,7 @@ TaskManager.prototype.get = function(id, vars)
  *
  * @return void
  */
-TaskManager.prototype.delete = function(id, vars)
+TaskManager.prototype.remove = function(id, vars)
 {
     App.get('api').basicCall('DELETE', '/user/tasks/'+id , {
         success: vars.success,

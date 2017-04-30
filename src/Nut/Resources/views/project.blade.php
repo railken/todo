@@ -12,8 +12,57 @@
 					<div class='task-check task-done' data-id='{id}' data-priority='{priority}'>
 
 					</div>
-					<div data-open='2' class='noselect tasks-element fluid'>
-						<span class='tasks-title fill'>{title}</span>
+					<div class='noselect tasks-element fluid'>
+						<span class='tasks-title fill fluid fluid-vcenter' data-open='2' >{title}</span>
+
+						<div class="dropdown">
+	                        <span class="project-dropdown dropdown-toggle btn-action-icon" type="button" id="task-actions-{id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+	                        	<i class='fa fa-ellipsis-h'></i>
+	                        </span>
+	                        <div class="dropdown-menu" aria-labelledby="task-actions-{id}">
+	                        	<div class='dropdown-subtitle'>Priority</div>
+	                        	<div class='fluid'>
+				        			<div data-container-form>
+				        				<input type='hidden' name='id' value='{id}'>
+				        				<input type='hidden' name='priority' value='0'>
+					        			<button type='submit' class='btn-reset tasks-actions-icon task-priority-icon {#priority_0}selected{/priority_0} task-edit' data-priority='0'>
+					        				<i class='fa fa-flag'></i>
+					        			</button>
+					        		</div>
+				        			<div data-container-form>
+				        				<input type='hidden' name='id' value='{id}'>
+				        				<input type='hidden' name='priority' value='1'>
+					        			<button type='submit' class='btn-reset tasks-actions-icon task-priority-icon {#priority_1}selected{/priority_1} task-edit' data-priority='1'>
+					        				<i class='fa fa-flag'></i>
+					        			</button>
+					        		</div>
+				        			<div data-container-form>
+				        				<input type='hidden' name='id' value='{id}'>
+				        				<input type='hidden' name='priority' value='2'>
+					        			<button type='submit' class='btn-reset tasks-actions-icon task-priority-icon {#priority_2}selected{/priority_2} task-edit' data-priority='2'>
+					        				<i class='fa fa-flag'></i>
+					        			</button>
+					        		</div>
+				        			<div data-container-form>
+				        				<input type='hidden' name='id' value='{id}'>
+				        				<input type='hidden' name='priority' value='3'>
+					        			<button type='submit' class='btn-reset tasks-actions-icon task-priority-icon {#priority_3}selected{/priority_3} task-edit' data-priority='3'>
+					        				<i class='fa fa-flag'></i>
+					        			</button>
+					        		</div>
+			        			</div>
+
+	                        	<div class="dropdown-divider"></div>
+
+	                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#task-delete" data-modal-id="input,{id}">Delete task</a>
+	                            <!--
+	                            <form method='POST' class='projects-delete'>
+	                                <input type='hidden' name='id' value='{id}'>
+	                                <button class="dropdown-item" type='submit'>Leave project</button>
+	                            </form>-->
+	                        </div>
+	                    </div>
 					</div>
 				</div>
 

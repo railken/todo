@@ -66,6 +66,17 @@ $('body').on('click', ".task-edit", function(e) {
 	resolver.update(attributes.id, attributes);
 });
 
+
+$('body').on('submit', "[name='task-delete']", function(e) {
+	e.preventDefault();
+
+	$('.modal').modal('hide');
+	var resolver = new TaskResolver();
+
+	resolver.remove($(this).find("[name='id']").val());
+});
+
+
 $('body').on('click', '.task-done', function(e) {
 
 

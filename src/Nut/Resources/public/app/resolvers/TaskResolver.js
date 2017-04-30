@@ -112,3 +112,31 @@ TaskResolver.prototype.done = function(id)
 		}
 	)
 };
+
+/**
+ * Remove a task
+ *
+ * @param {integer} id
+ *
+ * @return void
+ */
+TaskResolver.prototype.remove = function(id)
+{
+
+	var self = this;
+	App.get('user').removeTaskById(id);
+	self.template();
+
+	self.manager.remove(
+		id,
+		{
+			success: function(task) {
+				
+				self.template();
+			},
+			error: function(response) {
+				App.get('flash').error(response.message);
+			}
+		}
+	)
+};

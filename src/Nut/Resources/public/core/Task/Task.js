@@ -10,7 +10,9 @@ Task.prototype.constructor = Task;
 Task.create = function(attributes)
 {
 
-	var task = new Task();
+	var task = new Task({
+        priority: 0
+    });
     task.uid = uid();
 	task.fill(attributes);
 
