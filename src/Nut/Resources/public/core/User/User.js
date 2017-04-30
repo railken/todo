@@ -37,7 +37,7 @@ User.prototype.getProjectBy = function(name, value)
 User.prototype.getProjectById = function(id)
 {
 	return this.getProjectBy('id', id);
-}
+};
 
 /**
  * Remove a project by attribute and value
@@ -50,7 +50,7 @@ User.prototype.getProjectById = function(id)
 User.prototype.removeProjectBy = function(name, value)
 {
 	return this.projects.removeByAttribute(name, value);
-}
+};
 
 /**
  * Find a task by attribute and value
@@ -75,7 +75,7 @@ User.prototype.getTaskBy = function(name, value)
 
 	return null;
 
-}
+};
 
 /**
  * Find a task by id
@@ -87,4 +87,39 @@ User.prototype.getTaskBy = function(name, value)
 User.prototype.getTaskById = function(id)
 {
 	return this.getTaskBy('id', id);
+};
+
+/**
+ * Remove a task by attribute and value
+ *
+ * @param {string} name
+ * @param {mixed} value
+ *
+ * @return {Task}
+ */
+User.prototype.removeTaskBy = function(name, value)
+{
+	var found;
+
+	for (var i in this.projects) {
+
+		var found = this.projects[i].removeTaskBy(name, value);
+
+	}
+
+
+	return null;
+
 }
+
+/**
+ * Remove a task by id
+ *
+ * @param {integer} id
+ *
+ * @return {Task}
+ */
+User.prototype.removeTaskById = function(id)
+{
+	return this.removeTaskBy('id', id);
+};

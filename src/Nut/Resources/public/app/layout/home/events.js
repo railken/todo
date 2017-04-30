@@ -53,51 +53,29 @@ $('body').on('submit', '.tasks-add', function(e) {
 $('body').on('submit', '.tasks-edit', function(e) {
 	e.preventDefault();
 
-	var manager = new TaskManager();
+	var resolver = new TaskResolver();
 
-	var id = $(this).find("[name='id']").val();
-	var name = $(this).find("[name='name']").val();
-
-	$(this).closest("[data-container]").find('.tasks-title').html(name);
-
-	manager.update(
-		id,
-		{
-			params: {
-				title: name
-			},
-			success: function(project) {
-				
-				reload();
-			},
-			error: function(response) {
-				App.get('flash').error(response.message);
-			},
-		}
-	)
+	resolver.update($(this).find("[name='id']").val(), {
+		title: $(this).find("[name='name']").val()
+	});
 
 });
 
 $('body').on('click', '.task-done', function(e) {
 
-	var manager = new TaskManager();
 
 	var container = $(this).closest('.tasks-container');
-	var id = $(this).attr('data-id');
+	
 	container.addClass('removed');
+	var id = $(this).attr('data-id');
 
-	manager.done(
-		id,
-		{
-			success: function(project) {
-				
-				container.remove();
-				reload();
-			},
-			error: function(response) {
-				App.get('flash').error(response.message);
-			}
-		}
-	)
+	// Create an "transition"
+	setTimeout(function() {
+
+		var resolver = new TaskResolver();
+
+		resolver.done(id);
+	}, 200);
+
 
 });

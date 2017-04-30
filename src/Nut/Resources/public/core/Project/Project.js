@@ -60,3 +60,16 @@ Project.prototype.getTaskById = function(id)
 {
 	return this.getTaskBy('id', id);
 }
+
+/**
+ * Remove a task by attribute and value
+ *
+ * @param {string} name
+ * @param {mixed} value
+ *
+ * @return {Task}
+ */
+Project.prototype.removeTaskBy = function(name, value)
+{
+	return this.tasks.list.removeByAttribute(name, value);
+}

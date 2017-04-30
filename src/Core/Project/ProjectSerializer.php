@@ -15,7 +15,7 @@ class ProjectSerializer
             'id' => $project->id,
             'name' => $project->name,
             'tasks' => [
-                'list' => $project->tasks->map(function($task) use ($ts){
+                'list' => $project->tasks()->where('done', 0)->get()->map(function($task) use ($ts){
                     return $ts->all($task);
                 }),
             	'done' => $project->tasks()->where('done', 1)->count(),

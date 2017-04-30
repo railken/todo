@@ -49,3 +49,63 @@ TaskResolver.prototype.create = function(attributes)
 	})
 
 };
+
+/**
+ * Edit a task
+ *
+ * @param {integer} id
+ * @param {object} attributes
+ *
+ * @return void
+ */
+TaskResolver.prototype.update = function(id, attributes)
+{
+
+	var self = this;
+
+	App.get('user').getTaskById(id).fill(attributes);
+	self.template();
+
+	self.manager.update(
+		id,
+		{
+			params: attributes,
+			success: function(task) {
+				App.get('user').getTaskById(task.id).fill(task);
+				self.template();
+			},
+			error: function(response) {
+				App.get('flash').error(response.message);
+			},
+		}
+	)
+};
+
+
+/**
+ * Set a task as "done"
+ *
+ * @param {integer} id
+ *
+ * @return void
+ */
+TaskResolver.prototype.done = function(id)
+{
+
+	var self = this;
+	App.get('user').removeTaskById(id);
+	self.template();
+
+	self.manager.done(
+		id,
+		{
+			success: function(task) {
+				
+				self.template();
+			},
+			error: function(response) {
+				App.get('flash').error(response.message);
+			}
+		}
+	)
+};
