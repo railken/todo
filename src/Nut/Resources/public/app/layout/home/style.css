@@ -137,10 +137,12 @@ nav .nav-list {
 }
 
 .task-check {
-	width: 22px;
+	width: 100%;
 	height: 22px;
+	max-width: 22px;
+	max-height: 22px;
 	border-radius: 25px;
-	border: 1.8px solid;
+	border: 2px solid;
 	border-color: #efefef;
 	margin:5px 0;
 	margin-right: 10px;
@@ -148,16 +150,80 @@ nav .nav-list {
 	transition: background 0.3s;
 }
 
-.task-check[data-priority='0'] {
-	border-color: rgba(206, 206, 206, 1);
-	background: rgba(206, 206, 206, 0.1);
+.btn-reset {
+	border: 0;
+	background: none;
+	outline: none;
 }
 
+
+.task-priority-icon.selected {
+	border: 1px solid #3d3d47;
+}
+/*
+|--------------------------------------------------------------------------
+| TASK: Priority 0
+|--------------------------------------------------------------------------
+|
+*/
+.task-check[data-priority='0'] {
+	border-color: rgba(206, 206, 206, 1);
+	background: white;
+	border-width: 1px;
+}
 
 .task-check[data-priority='0']:hover {
 	background: rgba(206, 206, 206, 0.3);
 }
 
+.task-priority-icon[data-priority='0'] {
+	color: rgba(206, 206, 206, 1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| TASK: Priority 1
+|--------------------------------------------------------------------------
+|
+*/
+.task-check[data-priority='1'] {
+	border-color: rgba(255, 216, 116, 1);
+	background: rgba(255, 216, 116, 0.1);
+}
+
+.task-check[data-priority='1']:hover {
+	background: rgba(255, 216, 116, 0.3);
+}
+
+.task-priority-icon[data-priority='1'] {
+	color: rgba(255, 216, 116, 1);;
+}
+
+/*
+|--------------------------------------------------------------------------
+| TASK: Priority 2
+|--------------------------------------------------------------------------
+|
+*/
+.task-check[data-priority='2'] {
+	border-color: rgba(255, 163, 86, 1);
+	background: rgba(255, 163, 86, 0.3);
+}
+
+.task-check[data-priority='2']:hover {
+	background: rgba(255, 163, 86, 0.3);
+}
+
+.task-priority-icon[data-priority='2'] {
+	color: rgba(255, 163, 86, 1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| TASK: Priority 3
+|--------------------------------------------------------------------------
+|
+*/
 .task-check[data-priority='3'] {
 	border-color: rgba(172, 0, 0, 1);
 	background: rgba(172, 0, 0, 0.1);
@@ -167,10 +233,33 @@ nav .nav-list {
 	background: rgba(172, 0, 0, 0.3);
 }
 
+.task-priority-icon[data-priority='3'] {
+	color: rgba(172, 0, 0, 1);;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| 
+|--------------------------------------------------------------------------
+|
+*/
+
 .tasks .form-control[name="name"] {
 	margin:10px 0;
 }
 
 .tasks-add-container > div, .tasks-add-container .tasks-add{
 	width: 100%;
+}
+
+.tasks-actions-icon {
+	font-size: 19px;
+	margin: 0 6px;
+	opacity: 0.7;
+	cursor: pointer;
+}
+
+.tasks-actions-icon:hover {
+	opacity: 1.0;
 }

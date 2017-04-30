@@ -37,9 +37,11 @@ RouteServiceProvider.prototype.getTemplateMain = function()
 			return $('.nav-projects');
 		})
 		.ready(function() {
+	
 			toggle.reload();
 		})
 		.parent(main);
+
 
 	return main;
 
@@ -116,6 +118,9 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 				.vars({project: project, tasks: project.tasks, user: App.get('user')})
 				.container(function() {
 					return $('.content');
+				})
+				.ready(function() {
+					$("[data-popover]").popover();
 				})
 				.parent(main);
 

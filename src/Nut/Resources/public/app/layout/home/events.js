@@ -50,15 +50,20 @@ $('body').on('submit', '.tasks-add', function(e) {
 
 });
 
-$('body').on('submit', '.tasks-edit', function(e) {
-	e.preventDefault();
+
+$('body').on('click', ".task-edit", function(e) {
+
+	var container = $(this).closest("[data-container-form]");
 
 	var resolver = new TaskResolver();
 
-	resolver.update($(this).find("[name='id']").val(), {
-		title: $(this).find("[name='name']").val()
+	var attributes = {};
+
+	container.find("input, select, textarea").each(function(){
+		attributes[$(this).attr('name')] = $(this).val();
 	});
 
+	resolver.update(attributes.id, attributes);
 });
 
 $('body').on('click', '.task-done', function(e) {

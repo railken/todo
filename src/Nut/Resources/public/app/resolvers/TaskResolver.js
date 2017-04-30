@@ -13,8 +13,11 @@ var TaskResolver = function()
 TaskResolver.prototype.template = function()
 {
 
+	toggle.save();
 	template.load('content');
 	template.load('nav-projects');
+	toggle.rollback();
+	
 };
 
 /**

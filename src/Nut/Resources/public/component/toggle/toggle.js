@@ -1,9 +1,14 @@
 var toggle = {};
 
-toggle.change = function(element)
+toggle.open = function(t, panel)
 {
 
-	var container = element.attr('data-container');
+	if (t.attr('data-status') == panel)
+		return;
+
+	t.attr('data-status', panel);
+
+	var container = t.attr('data-container');
 
 	if (container) {
 		$.map($(".toggle[data-container='"+container+"']"), function(el) {
@@ -12,25 +17,40 @@ toggle.change = function(element)
 		});
 	}
 
-	element.find("[data-panel]").hide();
+	t.find("[data-panel]").hide();
+	t.find("[data-panel='"+panel+"']").show();
+};
 
-	var value = element.attr('data-status');
-	element.find("[data-panel='"+value+"']").show();
+toggle.save = function()
+{	
 
+	toggle.vars = [];
+
+	$(".toggle").each(function(index) {
+		toggle.vars[index] = $(this).attr('data-status');
+	});
 }
 
+toggle.rollback = function()
+{	
+	$(".toggle").each(function(index) {
+		toggle.open($(this), toggle.vars[index]);
+	});
+}
 
 toggle.reload = function()
 {
 
 	$.map($('.toggle'), function(el) {
-		toggle.change($(el));
+		var status = $(el).attr('data-status');
+		$(el).attr('data-status', 0);
+
+		toggle.open($(el), status);
 	});
 }
 
 $('body').on('click', "[data-open]", function() {
 
 	var container = $(this).closest('.toggle');
-	container.attr('data-status', $(this).attr('data-open'));
-	toggle.change(container);
+	toggle.open(container, $(this).attr('data-open'));
 });
