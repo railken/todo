@@ -17,7 +17,7 @@ TaskResolver.prototype.template = function()
 	template.load('content');
 	template.load('nav-projects');
 	toggle.rollback();
-	
+
 };
 
 /**
@@ -33,7 +33,7 @@ TaskResolver.prototype.create = function(attributes)
 	var task = Task.create(attributes);
 
 	App.get('user').getProjectById(task.project_id).tasks.list.push(task);
-	
+	var tmp_id = task.uid;
 	this.template();
 
 	var self = this;
@@ -41,8 +41,8 @@ TaskResolver.prototype.create = function(attributes)
 	this.manager.create({
 		params: attributes,
 		success: function(task) {
-
-			App.get('user').getTaskBy('uid', task.uid).fill(task);
+			
+			App.get('user').getTaskBy('uid', tmp_id).fill(task);
 
 			self.template();
 		},

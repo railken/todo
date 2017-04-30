@@ -11,6 +11,7 @@ Task.create = function(attributes)
 {
 
 	var task = new Task();
+    task.uid = uid();
 	task.fill(attributes);
 
 	return task;
