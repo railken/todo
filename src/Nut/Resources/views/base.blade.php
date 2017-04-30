@@ -1,10 +1,4 @@
 <header class='fluid'>
-    <div class='fill'>
-        Uhm...
-    </div>
-    <div>
-        {user.email}
-    </div>
 </header>
 <section class='fluid container'>
 

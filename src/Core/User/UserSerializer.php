@@ -15,6 +15,7 @@ class UserSerializer
             'id' => $user->id,
             'username' => $user->username,
             'email' => $user->email,
+            'points' => $user->points(),
             'projects' => $this->projects($user->projects)
         ];
     }

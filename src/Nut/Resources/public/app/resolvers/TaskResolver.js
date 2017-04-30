@@ -14,6 +14,7 @@ TaskResolver.prototype.template = function()
 {
 
 	toggle.save();
+	template.load('header');
 	template.load('content');
 	template.load('nav-projects');
 	toggle.rollback();

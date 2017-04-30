@@ -42,7 +42,15 @@ RouteServiceProvider.prototype.getTemplateMain = function()
 		})
 		.parent(main);
 
-
+	/** Header **/
+	template
+		.define('header')
+		.source('header')
+		.vars({user: App.get('user') })
+		.container(function() {
+			return $('header');
+		})
+		.parent(main)
 	return main;
 
 }
@@ -120,6 +128,7 @@ RouteServiceProvider.prototype.initialize = function(self, next)
 					return $('.content');
 				})
 				.ready(function() {
+					toggle.reload();
 					$("[data-popover]").popover();
 				})
 				.parent(main);

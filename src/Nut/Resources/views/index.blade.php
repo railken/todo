@@ -43,6 +43,21 @@
         </div>
     </div>
 
+    <template data-name='header'>
+
+        <div class='header-content fluid'>          
+            <div class='fill'>
+                Fix IT!
+            </div>
+            <div class=''>
+                {user.points} points
+            </div>
+            <div>
+                <i class='fa fa-gear'></i>
+            </div>
+        </div>
+    </template>
+
     <template data-name='nav-projects'>
         
         Projects

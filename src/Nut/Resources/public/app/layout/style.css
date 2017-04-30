@@ -18,6 +18,17 @@ a {
     color: #636b6f;
 }
 
+.header-content {
+    width: 100%;
+    max-width: 1024px;
+    margin:0 auto;
+    padding:0 15px;
+}
+
+.header-content > div {
+    padding:0 15px;
+}
+
 
 .fluid {
 	display: flex;
@@ -126,6 +137,10 @@ a {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.popover.bottom>.arrow:after {
+    border-bottom-color: #505061; 
 }
 
 .popover-title {
