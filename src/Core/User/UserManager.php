@@ -211,16 +211,4 @@ class UserManager extends ModelManager
 
         return parent::save($entity);
     }
-
-    /**
-     * To array
-     *
-     * @param Core\Manager\ModelContract $entity
-     *
-     * @return array
-     */
-    public function toArray(ModelContract $entity)
-    {
-        return [];
-    }
 }

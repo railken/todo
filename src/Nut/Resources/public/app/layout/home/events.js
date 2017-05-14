@@ -79,7 +79,6 @@ $('body').on('submit', "[name='task-delete']", function(e) {
 
 $('body').on('click', '.task-done', function(e) {
 
-
 	var container = $(this).closest('.tasks-container');
 	
 	container.addClass('removed');

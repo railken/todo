@@ -39,7 +39,7 @@ class TaskManager extends ModelManager
             $this->vars['user'] = $this->fillManyToOneById($entity, new UserManager(), $params, 'user');
         }
 
-           if (isset($params['project']) || isset($params['project_id'])) {
+        if (isset($params['project']) || isset($params['project_id'])) {
             $this->vars['project'] = $this->fillManyToOneById($entity, new ProjectManager(), $params, 'project');
         }
 
@@ -73,18 +73,6 @@ class TaskManager extends ModelManager
         }
 
         return parent::save($entity);
-    }
-
-    /**
-     * To array
-     *
-     * @param Core\Manager\ModelContract $entity
-     *
-     * @return array
-     */
-    public function toArray(ModelContract $entity)
-    {
-        return [];
     }
 
     /**
