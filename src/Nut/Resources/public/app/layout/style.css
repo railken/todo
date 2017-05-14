@@ -1,7 +1,7 @@
 html, body, main {
     background-color: #fff;
 
-    height: 100%;
+    min-height: 100%;
     margin: 0;
     display: flex;
     flex-flow: column;

@@ -51,9 +51,22 @@ $('body').on('submit', '.tasks-add', function(e) {
 });
 
 
-$('body').on('click', ".task-edit", function(e) {
+$('body').on('click', ".task-edit-priority", function(e) {
+	var form = $(this).closest('form');
+	var priority = $(this).attr('data-priority');
+	form.find("[name='priority']").val(priority);
+	form.find(".task-edit-priority").removeClass('selected');
+	form.find(".task-edit-priority[data-priority='"+priority+"']").addClass('selected');
+	form.find(".task-edit-priority-container").attr('data-priority', priority);
+	form.find("[data-popover]").popover('hide')
+});
 
-	var container = $(this).closest("[data-container-form]");
+
+$('body').on('submit', "[name='task-edit']", function(e) {
+
+	console.log(e);
+	e.preventDefault();
+	var container = $(this);
 
 	var resolver = new TaskResolver();
 
